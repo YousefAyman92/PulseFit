@@ -1,14 +1,6 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-
-const NAV_LINKS = [
-  { label: "Home",     to: "/" },
-  { label: "Plans",    to: "/plans" },
-  { label: "Classes",  to: "/classes" },
-  { label: "Market",   to: "/market" },
-  { label: "Feedback", to: "/feedback" },
-];
 
 const styles = {
   nav: {
@@ -19,7 +11,6 @@ const styles = {
     top: 0,
     zIndex: 100,
   },
-  // Max-width container centered inside nav
   inner: {
     maxWidth: "1100px",
     margin: "0 auto",
@@ -60,7 +51,6 @@ const styles = {
     color: "#ffffff",
     letterSpacing: "-0.01em",
   },
-  // Absolutely centered inside the inner container
   center: {
     position: "absolute",
     left: "50%",
@@ -73,7 +63,6 @@ const styles = {
     padding: 0,
   },
   navLink: {
-    color: "#aaaaaa",
     textDecoration: "none",
     fontSize: "0.9rem",
     fontWeight: "400",
@@ -81,8 +70,13 @@ const styles = {
     borderRadius: "6px",
     transition: "color 0.15s",
     whiteSpace: "nowrap",
+    color: "#aaaaaa",
   },
   navLinkActive: {
+    color: "#a3e635",   // ← green when active
+    fontWeight: "500",
+  },
+  navLinkHover: {
     color: "#ffffff",
   },
   right: {
@@ -112,7 +106,6 @@ const styles = {
     textDecoration: "none",
     display: "inline-flex",
     alignItems: "center",
-    transition: "background-color 0.15s",
     whiteSpace: "nowrap",
   },
   userText: {
@@ -120,12 +113,15 @@ const styles = {
     fontSize: "0.875rem",
     whiteSpace: "nowrap",
   },
-  accountLink: {
+  signOutBtn: {
+    background: "none",
+    border: "none",
     color: "#aaaaaa",
-    textDecoration: "none",
     fontSize: "0.9rem",
+    cursor: "pointer",
     padding: "0.3rem 0.5rem",
     transition: "color 0.15s",
+    whiteSpace: "nowrap",
   },
   adminLink: {
     color: "#a3e635",
@@ -134,22 +130,12 @@ const styles = {
     fontWeight: "500",
     padding: "0.3rem 0.5rem",
   },
-  signOutBtn: {
-    background: "none",
-    border: "1px solid #2a2a2a",
-    color: "#aaaaaa",
-    borderRadius: "8px",
-    padding: "0.35rem 0.85rem",
-    fontSize: "0.875rem",
-    cursor: "pointer",
-    transition: "border-color 0.15s, color 0.15s",
-    whiteSpace: "nowrap",
-  },
 };
 
 function Navbar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [hoveredLink, setHoveredLink] = useState("");
 
   const handleLogout = () => {
@@ -157,7 +143,35 @@ function Navbar() {
     navigate("/");
   };
 
-  const currentPath = window.location.pathname;
+  // Build nav links based on auth state
+  const publicLinks = [
+    { label: "Home",     to: "/" },
+    { label: "Plans",    to: "/plans" },
+    { label: "Classes",  to: "/classes" },
+    { label: "Market",   to: "/market" },
+    { label: "Feedback", to: "/feedback" },
+  ];
+
+  const memberLinks = [
+    { label: "Home",       to: "/" },
+    { label: "Plans",      to: "/plans" },
+    { label: "Classes",    to: "/classes" },
+    { label: "Market",     to: "/market" },
+    { label: "Feedback",   to: "/feedback" },
+    { label: "My Account", to: "/account" },
+  ];
+
+  const navLinks = user ? memberLinks : publicLinks;
+
+  const getLinkStyle = (to) => {
+    const isActive  = location.pathname === to;
+    const isHovered = hoveredLink === to;
+    return {
+      ...styles.navLink,
+      ...(isActive  ? styles.navLinkActive : {}),
+      ...(isHovered && !isActive ? styles.navLinkHover : {}),
+    };
+  };
 
   return (
     <nav style={styles.nav}>
@@ -173,36 +187,28 @@ function Navbar() {
 
         {/* CENTER — nav links */}
         <ul style={styles.center}>
-          {NAV_LINKS.map((link) => {
-            const isActive  = currentPath === link.to;
-            const isHovered = hoveredLink === link.to;
-            return (
-              <li key={link.to}>
-                <Link
-                  to={link.to}
-                  style={{
-                    ...styles.navLink,
-                    ...(isActive || isHovered ? styles.navLinkActive : {}),
-                  }}
-                  onMouseEnter={() => setHoveredLink(link.to)}
-                  onMouseLeave={() => setHoveredLink("")}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            );
-          })}
+          {navLinks.map((link) => (
+            <li key={link.to}>
+              <Link
+                to={link.to}
+                style={getLinkStyle(link.to)}
+                onMouseEnter={() => setHoveredLink(link.to)}
+                onMouseLeave={() => setHoveredLink("")}
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
         </ul>
 
         {/* RIGHT — auth */}
         <div style={styles.right}>
           {user ? (
             <>
-              <span style={styles.userText}>{user.fullName}</span>
               {user.role === "admin" && (
                 <Link to="/admin" style={styles.adminLink}>Admin</Link>
               )}
-              <Link to="/account" style={styles.accountLink}>My Account</Link>
+              <span style={styles.userText}>{user.fullName}</span>
               <button style={styles.signOutBtn} onClick={handleLogout}>
                 Sign out
               </button>

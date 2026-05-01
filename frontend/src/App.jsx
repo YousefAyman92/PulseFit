@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
-
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminLayout from "./components/AdminLayout";
 
 import Home from "./pages/Home";
 import Plans from "./pages/Plans";
@@ -22,41 +22,53 @@ import AdminEquipment from "./pages/admin/AdminEquipment";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminFeedback from "./pages/admin/AdminFeedback";
 
+function PublicLayout({ children }) {
+  return (
+    <>
+      <Navbar />
+      {children}
+      <Footer />
+    </>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Navbar />
         <Routes>
-          {/* Public routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/plans" element={<Plans />} />
-          <Route path="/classes" element={<Classes />} />
-          <Route path="/market" element={<Market />} />
-          <Route path="/feedback" element={<Feedback />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          {/* Public + member routes — with Navbar/Footer */}
+          <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
+          <Route path="/plans" element={<PublicLayout><Plans /></PublicLayout>} />
+          <Route path="/classes" element={<PublicLayout><Classes /></PublicLayout>} />
+          <Route path="/market" element={<PublicLayout><Market /></PublicLayout>} />
+          <Route path="/feedback" element={<PublicLayout><Feedback /></PublicLayout>} />
+          <Route path="/login" element={<PublicLayout><Login /></PublicLayout>} />
+          <Route path="/signup" element={<PublicLayout><Signup /></PublicLayout>} />
 
-          {/* Member protected routes */}
           <Route element={<ProtectedRoute allowedRoles={["member", "admin"]} />}>
-            <Route path="/account" element={<Account />} />
+            <Route path="/account" element={<PublicLayout><Account /></PublicLayout>} />
           </Route>
 
-          {/* Admin protected routes */}
+          {/* Admin routes — with sidebar, NO Navbar/Footer */}
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/plans" element={<AdminPlans />} />
-            <Route path="/admin/members" element={<AdminMembers />} />
-            <Route path="/admin/classes" element={<AdminClasses />} />
-            <Route path="/admin/equipment" element={<AdminEquipment />} />
-            <Route path="/admin/products" element={<AdminProducts />} />
-            <Route path="/admin/feedback" element={<AdminFeedback />} />
+            <Route path="/admin/*" element={
+              <AdminLayout>
+                <Routes>
+                  <Route index        element={<AdminDashboard />} />
+                  <Route path="plans"     element={<AdminPlans />} />
+                  <Route path="members"   element={<AdminMembers />} />
+                  <Route path="classes"   element={<AdminClasses />} />
+                  <Route path="equipment" element={<AdminEquipment />} />
+                  <Route path="products"  element={<AdminProducts />} />
+                  <Route path="feedback"  element={<AdminFeedback />} />
+                </Routes>
+              </AdminLayout>
+            } />
           </Route>
 
-          {/* 404 fallback */}
-          <Route path="*" element={<h2 style={{ padding: "2rem" }}>404 — Page not found</h2>} />
+          <Route path="*" element={<PublicLayout><h2 style={{padding:"3rem",color:"#fff"}}>404 — Page not found</h2></PublicLayout>} />
         </Routes>
-        <Footer />
       </AuthProvider>
     </BrowserRouter>
   );

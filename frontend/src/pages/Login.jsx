@@ -187,8 +187,8 @@ function Login() {
 
         <div style={styles.demoBox}>
           <div style={styles.demoTitle}>Demo accounts</div>
-          <div>Admin: admin@pulsefit.com / admin123</div>
-          <div>Member: amelia@example.com / member123</div>
+          <div>Admin: admin@gmail.com / Test#1234</div>
+          <div>Member: member@gmail.com / Test#1234</div>
         </div>
       </div>
     </div>

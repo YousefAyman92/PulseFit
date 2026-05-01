@@ -10,12 +10,12 @@ connectDB();
 const app = express();
 // app.use(cors({ origin: process.env.CLIENT_URL }));
 
-// Main API router
-app.use("/api", routes);
-
 // Middleware
 app.use(cors({ origin: process.env.CLIENT_URL }));
 app.use(express.json());
+
+// Main API router
+app.use("/api", routes);
 
 // Routes
 app.get("/api", (req, res) => {

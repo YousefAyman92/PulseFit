@@ -22,6 +22,8 @@ import AdminEquipment from "./pages/admin/AdminEquipment";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminFeedback from "./pages/admin/AdminFeedback";
 
+import Toast from "./components/Toast";
+
 function PublicLayout({ children }) {
   return (
     <>
@@ -36,6 +38,7 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <Toast />
         <Routes>
           {/* Public + member routes — with Navbar/Footer */}
           <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />

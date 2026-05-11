@@ -13,6 +13,7 @@ const classSchema = new mongoose.Schema(
     scheduledAt: { type: Date, required: true },
     durationMinutes: { type: Number, required: true },
     capacity: { type: Number, required: true },
+    enrolled: {type: Number , default: 0},
     intensity: {
       type: String,
       enum: ["low", "moderate", "high"],

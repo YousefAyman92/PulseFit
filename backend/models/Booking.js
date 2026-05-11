@@ -17,4 +17,6 @@ const bookingSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Prevent the same user from booking the same class multiple times
+bookingSchema.index({ userId: 1, classId: 1 }, { unique: true });
 module.exports = mongoose.model("Booking", bookingSchema);

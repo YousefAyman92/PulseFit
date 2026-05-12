@@ -305,11 +305,6 @@ export default function Home() {
                     </div>
                 </section>
             )}
-
-            <footer style={styles.footer}>
-                PulseFit Gym · Built for strength, recovery, and community.
-            </footer>
-
         </div>
     );
 }

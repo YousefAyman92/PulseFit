@@ -3,6 +3,17 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const styles = {
+   logoWrap: {
+    display: "flex",
+    alignItems: "center",
+    gap: "0.5rem",
+    textDecoration: "none",
+  },
+  logoText: {
+    color: "#ffffff",
+    fontWeight: "700",
+    fontSize: "1rem",
+  },
   nav: {
     backgroundColor: "#09090b",
     borderBottom: "1px solid #1a1a1a",
@@ -25,31 +36,6 @@ const styles = {
     display: "flex",
     alignItems: "center",
     flex: 1,
-  },
-  logoWrap: {
-    display: "flex",
-    alignItems: "center",
-    gap: "0.5rem",
-    textDecoration: "none",
-  },
-  logoBox: {
-    width: "30px",
-    height: "30px",
-    backgroundColor: "#a3e635",
-    borderRadius: "6px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontWeight: "800",
-    fontSize: "0.85rem",
-    color: "#0a0a0a",
-    flexShrink: 0,
-  },
-  logoText: {
-    fontSize: "1.05rem",
-    fontWeight: "700",
-    color: "#ffffff",
-    letterSpacing: "-0.01em",
   },
   center: {
     position: "absolute",
@@ -176,14 +162,11 @@ function Navbar() {
   return (
     <nav style={styles.nav}>
       <div style={styles.inner}>
-
-        {/* LEFT — logo */}
-        <div style={styles.left}>
-          <Link to="/" style={styles.logoWrap}>
-            <div style={styles.logoBox}>P</div>
-            <span style={styles.logoText}>PulseFit</span>
-          </Link>
-        </div>
+      {/* LEFT-logo*/}
+        <Link to="/" style={styles.logoWrap}>
+         <img src="/logo.svg" alt="PulseFit logo" width="40" height="40" />
+         <span style={styles.logoText}>PulseFit</span>
+       </Link>
 
         {/* CENTER — nav links */}
         <ul style={styles.center}>

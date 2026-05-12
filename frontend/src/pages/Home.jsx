@@ -6,7 +6,7 @@ const styles = {
         minHeight: "calc(100vh - 60px)",
         backgroundColor: "#09090b",
         backgroundImage:
-            "linear-gradient(rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.85) 100%), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1400&q=80')",
+            "linear-gradient(rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.85) 100%), url('/background.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         display: "flex",
@@ -280,7 +280,7 @@ export default function Home() {
                 </h1>
 
                 <p style={styles.heroSub}>
-                    A facility built for serious progress.
+                   Goals are Made to be Crushed.
                 </p>
 
                 <div style={styles.heroButtons}>

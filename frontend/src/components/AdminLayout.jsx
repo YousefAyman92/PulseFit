@@ -37,19 +37,6 @@ const s = {
     padding: "1.1rem 1.1rem 0.75rem",
     textDecoration: "none",
   },
-  logoBox: {
-    width: "26px",
-    height: "26px",
-    backgroundColor: "#a3e635",
-    borderRadius: "5px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontWeight: "800",
-    fontSize: "0.78rem",
-    color: "#0a0a0a",
-    flexShrink: 0,
-  },
   logoText: {
     fontSize: "0.95rem",
     fontWeight: "700",
@@ -127,8 +114,8 @@ function AdminLayout({ children }) {
       {/* Sidebar */}
       <aside style={s.sidebar}>
         <Link to="/admin" style={s.logoWrap}>
-          <div style={s.logoBox}>P</div>
-          <span style={s.logoText}>PulseFit</span>
+         <img src="/logo.svg" alt="PulseFit logo" width="40" height="40" />
+         <span style={s.logoText}>PulseFit</span>
         </Link>
 
         <span style={s.sectionLabel}>Manage</span>

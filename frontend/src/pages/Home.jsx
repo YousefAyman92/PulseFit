@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import Navbar from "../components/Navbar";
 
 const styles = {
     hero: {
@@ -17,6 +16,7 @@ const styles = {
         textAlign: "center",
         padding: "0 1rem",
     },
+
     heroLabel: {
         color: "#a3e635",
         fontSize: "12px",
@@ -24,6 +24,7 @@ const styles = {
         letterSpacing: "0.15em",
         marginBottom: "1.2rem",
     },
+
     heroTitle: {
         color: "#ffffff",
         fontSize: "clamp(2.5rem, 7vw, 5rem)",
@@ -31,9 +32,11 @@ const styles = {
         lineHeight: 1.1,
         margin: "0 0 1.5rem",
     },
+
     heroAccent: {
         color: "#a3e635",
     },
+
     heroSub: {
         color: "#888888",
         fontSize: "1.05rem",
@@ -41,12 +44,14 @@ const styles = {
         marginBottom: "2.5rem",
         lineHeight: 1.6,
     },
+
     heroButtons: {
         display: "flex",
         gap: "12px",
         flexWrap: "wrap",
         justifyContent: "center",
     },
+
     btnPrimary: {
         backgroundColor: "#a3e635",
         color: "#000",
@@ -58,7 +63,9 @@ const styles = {
         cursor: "pointer",
         textDecoration: "none",
         display: "inline-block",
+        transition: "all 0.2s ease",
     },
+
     btnOutline: {
         backgroundColor: "transparent",
         color: "#ffffff",
@@ -70,23 +77,28 @@ const styles = {
         cursor: "pointer",
         textDecoration: "none",
         display: "inline-block",
+        transition: "all 0.2s ease",
     },
+
     features: {
         backgroundColor: "#09090b",
         padding: "5rem 2rem",
         textAlign: "center",
     },
+
     featuresTitle: {
         color: "#ffffff",
         fontSize: "2rem",
         fontWeight: "800",
         marginBottom: "0.5rem",
     },
+
     featuresSub: {
         color: "#888888",
         fontSize: "15px",
         marginBottom: "3rem",
     },
+
     grid: {
         display: "grid",
         gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
@@ -94,13 +106,16 @@ const styles = {
         maxWidth: "1100px",
         margin: "0 auto",
     },
+
     card: {
         backgroundColor: "#16161a",
         border: "1px solid #2a2a2a",
         borderRadius: "12px",
         padding: "1.5rem",
         textAlign: "left",
+        transition: "all 0.25s ease",
     },
+
     cardLabel: {
         color: "#a3e635",
         fontSize: "11px",
@@ -108,22 +123,26 @@ const styles = {
         letterSpacing: "0.12em",
         marginBottom: "0.6rem",
     },
+
     cardTitle: {
         color: "#ffffff",
         fontSize: "18px",
         fontWeight: "700",
         marginBottom: "0.5rem",
     },
+
     cardDesc: {
         color: "#888888",
         fontSize: "13px",
         lineHeight: 1.6,
         margin: 0,
     },
+
     marketWrap: {
         backgroundColor: "#09090b",
         borderTop: "1px solid #2a2a2a",
     },
+
     market: {
         maxWidth: "1100px",
         margin: "0 auto",
@@ -134,17 +153,20 @@ const styles = {
         flexWrap: "wrap",
         gap: "1rem",
     },
+
     marketText: {
         color: "#ffffff",
         fontSize: "1.5rem",
         fontWeight: "800",
         margin: 0,
     },
+
     marketSub: {
         color: "#888888",
         fontSize: "14px",
         margin: "4px 0 0",
     },
+
     btnMarket: {
         backgroundColor: "transparent",
         border: "1px solid #333333",
@@ -156,42 +178,37 @@ const styles = {
         cursor: "pointer",
         textDecoration: "none",
         display: "inline-block",
-        whiteSpace: "nowrap",
+        transition: "all 0.2s ease",
     },
+
     cta: {
         backgroundColor: "#09090b",
         borderTop: "1px solid #2a2a2a",
         padding: "5rem 2rem",
         textAlign: "center",
     },
+
     ctaTitle: {
         color: "#ffffff",
         fontSize: "2rem",
         fontWeight: "800",
         marginBottom: "0.5rem",
     },
+
     ctaSub: {
         color: "#888888",
         fontSize: "15px",
         marginBottom: "2rem",
     },
+
     ctaButtons: {
         display: "flex",
         gap: "12px",
         justifyContent: "center",
         flexWrap: "wrap",
     },
-    footer: {
-        backgroundColor: "#09090b",
-        borderTop: "1px solid #2a2a2a",
-        padding: "1.5rem 2rem",
-        textAlign: "center",
-        color: "#888888",
-        fontSize: "13px",
-    },
 };
 
-// gym features shown in the grid section
 const features = [
     {
         label: "EQUIPMENT",
@@ -227,44 +244,85 @@ const features = [
 
 export default function Home() {
     const { user, loading } = useAuth();
-
-    // wait for session to restore from localStorage before rendering
     if (loading) return null;
+
+    const hoverBtn = (e, type) => {
+        if (type === "primary") {
+            e.currentTarget.style.transform = "translateY(-2px)";
+            e.currentTarget.style.opacity = "0.9";
+        } else {
+            e.currentTarget.style.transform = "translateY(-2px)";
+            e.currentTarget.style.borderColor = "#a3e635";
+            e.currentTarget.style.color = "#a3e635";
+        }
+    };
+
+    const leaveBtn = (e, type) => {
+        e.currentTarget.style.transform = "translateY(0)";
+        e.currentTarget.style.opacity = "1";
+        if (type !== "primary") {
+            e.currentTarget.style.borderColor = "#333333";
+            e.currentTarget.style.color = "#ffffff";
+        }
+    };
 
     return (
         <div style={{ fontFamily: "'Segoe UI', sans-serif", backgroundColor: "#09090b" }}>
 
-            {/* navbar is handled by App.jsx via PublicLayout */}
-
-            {/* hero section with background image */}
+            {/* HERO */}
             <section style={styles.hero}>
                 <p style={styles.heroLabel}>PULSEFIT GYM</p>
+
                 <h1 style={styles.heroTitle}>
                     Push your <span style={styles.heroAccent}>limits.</span>
                     <br />
                     Define your <span style={styles.heroAccent}>legacy.</span>
                 </h1>
+
                 <p style={styles.heroSub}>
-                    A facility built for serious progress. High-end equipment, intense
-                    classes, and a community that demands your best.
+                    A facility built for serious progress.
                 </p>
+
                 <div style={styles.heroButtons}>
-                    <Link to="/plans" style={styles.btnPrimary}>
+                    <Link
+                        to="/plans"
+                        style={styles.btnPrimary}
+                        onMouseEnter={(e) => hoverBtn(e, "primary")}
+                        onMouseLeave={(e) => leaveBtn(e, "primary")}
+                    >
                         Explore Plans
                     </Link>
-                    <Link to="/classes" style={styles.btnOutline}>
+
+                    <Link
+                        to="/classes"
+                        style={styles.btnOutline}
+                        onMouseEnter={(e) => hoverBtn(e, "outline")}
+                        onMouseLeave={(e) => leaveBtn(e, "outline")}
+                    >
                         View Classes
                     </Link>
                 </div>
             </section>
 
-            {/* 6 feature cards */}
+            {/* FEATURES */}
             <section style={styles.features}>
-                <h2 style={styles.featuresTitle}>Everything you need to get serious</h2>
+                <h2 style={styles.featuresTitle}>Everything you need</h2>
                 <p style={styles.featuresSub}>Designed for athletes, accessible for beginners.</p>
+
                 <div style={styles.grid}>
                     {features.map((f) => (
-                        <div key={f.label} style={styles.card}>
+                        <div
+                            key={f.label}
+                            style={styles.card}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.borderColor = "#a3e635";
+                                e.currentTarget.style.boxShadow = "0 0 14px rgba(163,230,53,0.25)";
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.borderColor = "#2a2a2a";
+                                e.currentTarget.style.boxShadow = "none";
+                            }}
+                        >
                             <p style={styles.cardLabel}>{f.label}</p>
                             <h3 style={styles.cardTitle}>{f.title}</h3>
                             <p style={styles.cardDesc}>{f.desc}</p>
@@ -273,34 +331,47 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* market banner */}
+            {/* MARKET */}
             <div style={styles.marketWrap}>
                 <div style={styles.market}>
                     <div>
                         <p style={styles.marketText}>Fuel your training</p>
-                        <p style={styles.marketSub}>
-                            Protein, supplements, energy drinks, snacks and more — straight from our market.
-                        </p>
+                        <p style={styles.marketSub}>Supplements and more.</p>
                     </div>
-                    <Link to="/market" style={styles.btnMarket}>
+
+                    <Link
+                        to="/market"
+                        style={styles.btnMarket}
+                        onMouseEnter={(e) => hoverBtn(e, "outline")}
+                        onMouseLeave={(e) => leaveBtn(e, "outline")}
+                    >
                         Browse Market
                     </Link>
                 </div>
             </div>
 
-            {/* CTA only shows for guests — hidden when logged in */}
+            {/* CTA */}
             {!user && (
                 <section style={styles.cta}>
                     <h2 style={styles.ctaTitle}>Ready to start?</h2>
-                    <p style={styles.ctaSub}>
-                        Create your free account and pick the plan that fits your training.
-                    </p>
+
                     <div style={styles.ctaButtons}>
-                        <Link to="/signup" style={styles.btnPrimary}>
+                        <Link
+                            to="/signup"
+                            style={styles.btnPrimary}
+                            onMouseEnter={(e) => hoverBtn(e, "primary")}
+                            onMouseLeave={(e) => leaveBtn(e, "primary")}
+                        >
                             Create account
                         </Link>
-                        <Link to="/login" style={styles.btnOutline}>
-                            I already have an account
+
+                        <Link
+                            to="/login"
+                            style={styles.btnOutline}
+                            onMouseEnter={(e) => hoverBtn(e, "outline")}
+                            onMouseLeave={(e) => leaveBtn(e, "outline")}
+                        >
+                            Login
                         </Link>
                     </div>
                 </section>
@@ -308,4 +379,3 @@ export default function Home() {
         </div>
     );
 }
-

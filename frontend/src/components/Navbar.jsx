@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const styles = {
-   logoWrap: {
+  logoWrap: {
     display: "flex",
     alignItems: "center",
     gap: "0.5rem",
@@ -15,12 +15,15 @@ const styles = {
     fontSize: "1rem",
   },
   nav: {
-    backgroundColor: "#09090b",
-    borderBottom: "1px solid #1a1a1a",
+    background: "transparent",
+    borderBottom: "1px solid rgba(255,255,255,0.08)",
     height: "60px",
     position: "sticky",
     top: 0,
+    left: 0,
+    width: "100%",
     zIndex: 100,
+    backdropFilter: "blur(8px)",
   },
   inner: {
     maxWidth: "1100px",
@@ -131,30 +134,30 @@ function Navbar() {
 
   // Build nav links based on auth state
   const publicLinks = [
-    { label: "Home",     to: "/" },
-    { label: "Plans",    to: "/plans" },
-    { label: "Classes",  to: "/classes" },
-    { label: "Market",   to: "/market" },
+    { label: "Home", to: "/" },
+    { label: "Plans", to: "/plans" },
+    { label: "Classes", to: "/classes" },
+    { label: "Market", to: "/market" },
     { label: "Feedback", to: "/feedback" },
   ];
 
   const memberLinks = [
-    { label: "Home",       to: "/" },
-    { label: "Plans",      to: "/plans" },
-    { label: "Classes",    to: "/classes" },
-    { label: "Market",     to: "/market" },
-    { label: "Feedback",   to: "/feedback" },
+    { label: "Home", to: "/" },
+    { label: "Plans", to: "/plans" },
+    { label: "Classes", to: "/classes" },
+    { label: "Market", to: "/market" },
+    { label: "Feedback", to: "/feedback" },
     { label: "My Account", to: "/account" },
   ];
 
   const navLinks = user ? memberLinks : publicLinks;
 
   const getLinkStyle = (to) => {
-    const isActive  = location.pathname === to;
+    const isActive = location.pathname === to;
     const isHovered = hoveredLink === to;
     return {
       ...styles.navLink,
-      ...(isActive  ? styles.navLinkActive : {}),
+      ...(isActive ? styles.navLinkActive : {}),
       ...(isHovered && !isActive ? styles.navLinkHover : {}),
     };
   };
@@ -162,11 +165,11 @@ function Navbar() {
   return (
     <nav style={styles.nav}>
       <div style={styles.inner}>
-      {/* LEFT-logo*/}
+        {/* LEFT-logo*/}
         <Link to="/" style={styles.logoWrap}>
-         <img src="/logo.svg" alt="PulseFit logo" width="40" height="40" />
-         <span style={styles.logoText}>PulseFit</span>
-       </Link>
+          <img src="/logo.svg" alt="PulseFit logo" width="40" height="40" />
+          <span style={styles.logoText}>PulseFit</span>
+        </Link>
 
         {/* CENTER — nav links */}
         <ul style={styles.center}>
@@ -198,7 +201,7 @@ function Navbar() {
             </>
           ) : (
             <>
-              <Link to="/login"  style={styles.signInLink}>Sign in</Link>
+              <Link to="/login" style={styles.signInLink}>Sign in</Link>
               <Link to="/signup" style={styles.joinBtn}>Join now</Link>
             </>
           )}

@@ -85,9 +85,27 @@ const s = {
 };
 
 const INTENSITY_COLORS = {
-  high:     { backgroundColor: "#3b0a0a", color: "#f87171" },
-  moderate: { backgroundColor: "#3b2000", color: "#fb923c" },
-  low:      { backgroundColor: "#14532d", color: "#4ade80" },
+  high:     { backgroundColor: "transparent",
+    border: "1px solid #ff6b6b33",
+    color: "#ff6b6b",
+    borderRadius: "20px",
+    padding: "4px 12px",
+    fontSize: "12px",
+    cursor: "pointer", },
+  moderate: { backgroundColor: "#2a1a00",
+    color: "#f59e0b",
+    border: "1px solid #f59e0b33",
+    borderRadius: "20px",
+    padding: "2px 10px",
+    fontSize: "11px",
+    fontWeight: "700", },
+  low:      { backgroundColor: "#0a2a0a",
+    color: "#22c55e",
+    border: "1px solid #22c55e33",
+    borderRadius: "20px",
+    padding: "2px 10px",
+    fontSize: "11px",
+    fontWeight: "700", },
 };
 
 function formatDateTime(dateStr) {

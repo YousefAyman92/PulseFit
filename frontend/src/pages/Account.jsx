@@ -80,8 +80,9 @@ const styles = {
     gap: "0.75rem",
   },
   badgeActive: {
-    backgroundColor: "#14532d",
-    color: "#4ade80",
+    backgroundColor: "#0a2a0a",
+    color: "#22c55e",
+    border: "1px solid #22c55e33",
     fontSize: "0.72rem",
     fontWeight: "600",
     padding: "0.25rem 0.65rem",
@@ -90,8 +91,9 @@ const styles = {
     letterSpacing: "0.05em",
   },
   badgeBooked: {
-    backgroundColor: "#14532d",
-    color: "#4ade80",
+    backgroundColor: "#0a2a0a",
+    color: "#22c55e",
+    border: "1px solid #22c55e33",
     fontSize: "0.72rem",
     fontWeight: "600",
     padding: "0.25rem 0.65rem",

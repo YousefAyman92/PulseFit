@@ -20,6 +20,36 @@ router.post("/", auth, async (req, res) => {
       return res.status(400).json({ message: "Sorry, this class is full!" });
     }
 
+    // Check if a booking already exists for this user+class (any status)
+    const existingBooking = await Booking.findOne({ userId, classId });
+
+    if (existingBooking) {
+      if (existingBooking.status === "booked") {
+        // Already actively booked
+        return res
+          .status(400)
+          .json({ message: "You have already booked this class." });
+      }
+
+      // Was cancelled before — reactivate it
+      existingBooking.status = "booked";
+      await existingBooking.save();
+
+      fitnessClass.enrolled += 1;
+      await fitnessClass.save();
+
+      await existingBooking.populate(
+        "classId",
+        "name instructor scheduledAt durationMinutes intensity type"
+      );
+
+      return res.status(201).json({
+        message: "Booking successful!",
+        booking: existingBooking,
+      });
+    }
+
+    // No existing booking — create a fresh one
     const newBooking = new Booking({ classId, userId });
     await newBooking.save();
 
@@ -30,10 +60,12 @@ router.post("/", auth, async (req, res) => {
       "classId",
       "name instructor scheduledAt durationMinutes intensity type"
     );
+
     res
       .status(201)
       .json({ message: "Booking successful!", booking: newBooking });
   } catch (err) {
+    // Fallback safety net for any unexpected duplicate key errors
     if (err.code === 11000) {
       return res
         .status(400)

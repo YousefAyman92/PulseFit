@@ -9,6 +9,7 @@ router.use("/classes", require("./api/classes"));
 router.use("/bookings", require("./api/bookings"));
 router.use("/equipment", require("./api/equipment"));
 router.use("/products", require("./api/products"));
+router.use("/reservations", require("./api/reservations"));
 router.use("/feedback", require("./api/feedback"));
 
 module.exports = router;

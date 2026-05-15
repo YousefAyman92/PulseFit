@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema(
     phone: { type: String },
     role: { type: String, enum: ["member", "admin"], default: "member" },
     status: { type: String, enum: ["active", "inactive"], default: "active" },
+    needsExpiryToast: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

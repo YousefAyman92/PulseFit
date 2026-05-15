@@ -12,9 +12,20 @@ router.get("/me", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-passwordHash");
     if (!user) return res.status(404).json({ message: "User not found" });
-    res.json(user);
+
+    let userData = user.toObject();
+    
+    if (user.needsExpiryToast) {
+      userData.expiryMessage = "Your plan has expired and was automatically cancelled.";
+      
+      // Reset the flag
+      user.needsExpiryToast = false;
+      await user.save();
+    }
+
+    res.json(userData);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: "Server Error" });
   }
 });
 
@@ -65,11 +76,11 @@ router.get("/", auth, admin, async (req, res) => {
     const { search } = req.query;
     const filter = search
       ? {
-          $or: [
-            { fullName: { $regex: search, $options: "i" } },
-            { email: { $regex: search, $options: "i" } },
-          ],
-        }
+        $or: [
+          { fullName: { $regex: search, $options: "i" } },
+          { email: { $regex: search, $options: "i" } },
+        ],
+      }
       : {};
     const users = await User.find(filter)
       .select("-passwordHash")

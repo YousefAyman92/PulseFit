@@ -5,6 +5,7 @@ const routes = require("./routes");
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./config/swagger");
+const startSubscriptionChecker = require('./jobs/subscriptionChecker');
 
 dotenv.config();
 connectDB();
@@ -49,8 +50,11 @@ app.use((err, req, res, next) => {
 });
 
 // Start Server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`Running on PORT ${PORT}`);
 });
+
+// Start the daily checker
+startSubscriptionChecker();

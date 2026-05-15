@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { showToast } from "../components/Toast";
 import api from "../utils/api";
 
 const styles = {
@@ -32,7 +33,7 @@ const styles = {
     padding: "1.1rem 1.5rem",
   },
   rowTitle: { fontSize: "0.95rem", fontWeight: "500", color: "#ffffff", marginBottom: "0.2rem" },
-  rowSub:   { fontSize: "0.82rem", color: "#888" },
+  rowSub: { fontSize: "0.82rem", color: "#888" },
   rowRight: { display: "flex", alignItems: "center", gap: "0.75rem" },
   // Badges
   badgeActive: {
@@ -80,25 +81,42 @@ function formatDateTime(d) {
 }
 
 function getResBadge(status) {
-  if (status === "reserved")  return styles.badgeReserved;
+  if (status === "reserved") return styles.badgeReserved;
   if (status === "picked_up") return styles.badgePickedUp;
   return styles.badgeCancelled;
 }
 
 function Account() {
   const { user } = useAuth();
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
 
-  const [subscription,   setSubscription]   = useState(null);
-  const [bookings,       setBookings]        = useState([]);
-  const [reservations,   setReservations]    = useState([]);
-  const [loadingSub,     setLoadingSub]      = useState(true);
-  const [loadingBook,    setLoadingBook]     = useState(true);
-  const [loadingRes,     setLoadingRes]      = useState(true);
-  const [error,          setError]           = useState("");
+  const [subscription, setSubscription] = useState(null);
+  const [bookings, setBookings] = useState([]);
+  const [reservations, setReservations] = useState([]);
+  const [loadingSub, setLoadingSub] = useState(true);
+  const [loadingBook, setLoadingBook] = useState(true);
+  const [loadingRes, setLoadingRes] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (!user) { navigate("/login"); return; }
+
+    // Fetch the profile to check for expiry notifications
+    const checkNotifications = async () => {
+      try {
+        const res = await api.get("/users/me");
+
+        // If the backend says a plan was cancelled, show the toast!
+        if (res.data.expiryMessage) {
+          showToast(res.data.expiryMessage, "error");
+        }
+      } catch (err) {
+        console.error("Notification check failed", err);
+      }
+    };
+
+    checkNotifications();
+    
     fetchSubscription();
     fetchBookings();
     fetchReservations();

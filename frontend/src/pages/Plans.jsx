@@ -75,7 +75,7 @@ function Plans() {
         <div style={s.header}>
           <h1 style={s.title}>Membership plans</h1>
           <p style={s.subtitle}>
-            Flexible options for every level of commitment.
+            Choose the plan that fits your fitness goals and lifestyle.
           </p>
         </div>
 

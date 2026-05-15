@@ -150,7 +150,7 @@ function Market() {
         <div style={s.sectionLabel}>Market</div>
         <h1 style={s.title}>Fuel your training</h1>
         <p style={s.subtitle}>
-          Protein, supplements, energy drinks, snacks, apparel and accessories — pick up at the front desk.
+          Everything you need to support your workouts — available for quick pickup at the front desk.
         </p>
 
         <div style={s.controlsRow}>

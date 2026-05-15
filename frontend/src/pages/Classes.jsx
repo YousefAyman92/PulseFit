@@ -131,7 +131,7 @@ function Classes() {
     <div style={s.page}>
       <div style={s.inner}>
         <h1 style={s.title}>Upcoming classes</h1>
-        <p style={s.subtitle}>Book in seconds. Capacity updates live.</p>
+        <p style={s.subtitle}>Discover and join upcoming sessions with ease.</p>
 
         <div style={s.filtersRow}>
           {TYPE_FILTERS.map((f) => (

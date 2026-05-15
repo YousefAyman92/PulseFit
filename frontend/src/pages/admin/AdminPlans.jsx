@@ -142,7 +142,7 @@ function AdminPlans() {
       <div style={s.topBar}>
         <div>
           <h1 style={s.pageTitle}>Plans</h1>
-          <p style={s.pageSubtitle}>Subscription tiers shown to members.</p>
+          <p style={s.pageSubtitle}>Manage subscription tiers and pricing options for members.</p>
         </div>
         <button style={s.newBtn} onClick={openNew}>+ New plan</button>
       </div>

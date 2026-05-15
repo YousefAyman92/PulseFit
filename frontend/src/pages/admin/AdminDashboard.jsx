@@ -264,8 +264,8 @@ export default function AdminDashboard() {
 
     return (
         <div style={s.page}>
-            <h1 style={s.heading}>Operations Dashboard</h1>
-            <p style={s.subheading}>Live snapshot of your gym performance.</p>
+            <h1 style={s.heading}>Dashboard</h1>
+            <p style={s.subheading}>Get a real-time overview of your gym’s performance and activity.</p>
 
             {/* 8 stat cards at the top */}
             <div style={s.statsGrid}>

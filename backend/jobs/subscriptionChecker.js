@@ -28,8 +28,6 @@ const startSubscriptionChecker = () => {
                     { _id: { $in: userIds } },
                     { $set: { needsExpiryToast: true } }
                 );
-
-                console.log(`[Checker] Auto-cancelled ${expiredSubs.length} plans.`);
             }
         } catch (err) {
             console.error('Checker Error:', err);

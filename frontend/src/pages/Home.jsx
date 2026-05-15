@@ -274,9 +274,9 @@ export default function Home() {
                 <p style={styles.heroLabel}>PULSEFIT GYM</p>
 
                 <h1 style={styles.heroTitle}>
-                    Push your <span style={styles.heroAccent}>limits.</span>
+                    Push your <span style={styles.heroAccent}>limits</span>.
                     <br />
-                    Define your <span style={styles.heroAccent}>legacy.</span>
+                    Define your <span style={styles.heroAccent}>legacy</span>.
                 </h1>
 
                 <p style={styles.heroSub}>

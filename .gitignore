@@ -21,8 +21,6 @@ Thumbs.db
 .idea/
 
 # Postman
-.postman/
-postman/
 
 # DBConnection
 DBConnection.txt

@@ -2,225 +2,34 @@ import { useEffect, useState } from "react";
 import api from "../../utils/api";
 
 const s = {
-  topBar: {
-    display: "flex",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
-    marginBottom: "2rem",
-  },
-  pageTitle: {
-    fontSize: "1.5rem",
-    fontWeight: "700",
-    color: "#ffffff",
-    marginBottom: "0.25rem",
-  },
-  pageSubtitle: {
-    fontSize: "0.83rem",
-    color: "#666",
-  },
-  newBtn: {
-    backgroundColor: "#a3e635",
-    color: "#0a0a0a",
-    border: "none",
-    borderRadius: "8px",
-    padding: "0.5rem 1.1rem",
-    fontSize: "0.875rem",
-    fontWeight: "700",
-    cursor: "pointer",
-    whiteSpace: "nowrap",
-  },
-  tableWrap: {
-    backgroundColor: "#111114",
-    border: "1px solid #1e1e1e",
-    borderRadius: "10px",
-    overflow: "hidden",
-  },
-  table: {
-    width: "100%",
-    borderCollapse: "collapse",
-  },
-  th: {
-    textAlign: "left",
-    padding: "0.75rem 1.25rem",
-    fontSize: "0.7rem",
-    fontWeight: "600",
-    letterSpacing: "0.07em",
-    textTransform: "uppercase",
-    color: "#555",
-    borderBottom: "1px solid #1e1e1e",
-  },
-  td: {
-    padding: "0.9rem 1.25rem",
-    fontSize: "0.875rem",
-    color: "#cccccc",
-    borderBottom: "1px solid #1a1a1a",
-  },
-  tdLast: {
-    padding: "0.9rem 1.25rem",
-    fontSize: "0.875rem",
-    color: "#cccccc",
-  },
-  badgeActive: {
-    backgroundColor: "#0a2a0a",
-    color: "#22c55e",
-    border: "1px solid #22c55e33",
-    fontSize: "0.68rem",
-    fontWeight: "600",
-    padding: "0.2rem 0.6rem",
-    borderRadius: "20px",
-    textTransform: "uppercase",
-    letterSpacing: "0.05em",
-  },
-  badgeInactive: {
-    backgroundColor: "transparent",
-    border: "1px solid #2a2a2a",
-    color: "#aaaaaa",
-    fontSize: "0.68rem",
-    fontWeight: "600",
-    padding: "0.2rem 0.6rem",
-    borderRadius: "20px",
-    textTransform: "uppercase",
-    letterSpacing: "0.05em",
-  },
-  editBtn: {
-    background: "none",
-    border: "none",
-    color: "#888",
-    fontSize: "0.83rem",
-    cursor: "pointer",
-    marginRight: "0.75rem",
-    transition: "color 0.15s",
-  },
-  deleteBtn: {
-    background: "none",
-    border: "none",
-    color: "#ff6b6b",
-    fontSize: "0.83rem",
-    cursor: "pointer",
-    transition: "opacity 0.15s",
-  },
-  // Modal
-  overlay: {
-    position: "fixed",
-    inset: 0,
-    backgroundColor: "rgba(0,0,0,0.7)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 200,
-    padding: "1rem",
-  },
-  modal: {
-    backgroundColor: "#16161a",
-    border: "1px solid #2a2a2a",
-    borderRadius: "12px",
-    padding: "2rem",
-    width: "100%",
-    maxWidth: "480px",
-    maxHeight: "90vh",
-    overflowY: "auto",
-  },
-  modalHeader: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: "1.5rem",
-  },
-  modalTitle: {
-    fontSize: "1.1rem",
-    fontWeight: "600",
-    color: "#ffffff",
-  },
-  closeBtn: {
-    background: "none",
-    border: "none",
-    color: "#888",
-    fontSize: "0.9rem",
-    cursor: "pointer",
-  },
-  formGrid: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: "1rem",
-  },
-  formFull: {
-    gridColumn: "1 / -1",
-  },
-  label: {
-    display: "block",
-    fontSize: "0.68rem",
-    fontWeight: "600",
-    letterSpacing: "0.08em",
-    color: "#888",
-    textTransform: "uppercase",
-    marginBottom: "0.4rem",
-  },
-  input: {
-    width: "100%",
-    backgroundColor: "#111114",
-    border: "1px solid #333",
-    borderRadius: "6px",
-    padding: "0.6rem 0.8rem",
-    color: "#ffffff",
-    fontSize: "0.875rem",
-    outline: "none",
-    boxSizing: "border-box",
-  },
-  textarea: {
-    width: "100%",
-    backgroundColor: "#111114",
-    border: "1px solid #333",
-    borderRadius: "6px",
-    padding: "0.6rem 0.8rem",
-    color: "#ffffff",
-    fontSize: "0.875rem",
-    outline: "none",
-    resize: "vertical",
-    minHeight: "90px",
-    boxSizing: "border-box",
-    fontFamily: "inherit",
-  },
-  select: {
-    width: "100%",
-    backgroundColor: "#111114",
-    border: "1px solid #333",
-    borderRadius: "6px",
-    padding: "0.6rem 0.8rem",
-    color: "#ffffff",
-    fontSize: "0.875rem",
-    outline: "none",
-    boxSizing: "border-box",
-  },
-  modalFooter: {
-    display: "flex",
-    justifyContent: "flex-end",
-    gap: "0.75rem",
-    marginTop: "1.5rem",
-  },
-  cancelBtn: {
-    background: "none",
-    border: "1px solid #333",
-    color: "#aaa",
-    borderRadius: "7px",
-    padding: "0.55rem 1.1rem",
-    fontSize: "0.875rem",
-    cursor: "pointer",
-  },
-  saveBtn: {
-    backgroundColor: "#a3e635",
-    border: "none",
-    color: "#0a0a0a",
-    borderRadius: "7px",
-    padding: "0.55rem 1.25rem",
-    fontSize: "0.875rem",
-    fontWeight: "700",
-    cursor: "pointer",
-  },
-  errorMsg: {
-    color: "#ff6b6b",
-    fontSize: "0.82rem",
-    marginBottom: "1rem",
-  },
+  topBar: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "2rem" },
+  pageTitle: { fontSize: "1.5rem", fontWeight: "700", color: "#ffffff", marginBottom: "0.25rem" },
+  pageSubtitle: { fontSize: "0.83rem", color: "#666" },
+  newBtn: { backgroundColor: "#a3e635", color: "#0a0a0a", border: "none", borderRadius: "8px", padding: "0.5rem 1.1rem", fontSize: "0.875rem", fontWeight: "700", cursor: "pointer", whiteSpace: "nowrap" },
+  tableWrap: { backgroundColor: "#111114", border: "1px solid #1e1e1e", borderRadius: "10px", overflow: "hidden" },
+  table: { width: "100%", borderCollapse: "collapse" },
+  th: { textAlign: "left", padding: "0.75rem 1.25rem", fontSize: "0.7rem", fontWeight: "600", letterSpacing: "0.07em", textTransform: "uppercase", color: "#555", borderBottom: "1px solid #1e1e1e" },
+  td: { padding: "0.9rem 1.25rem", fontSize: "0.875rem", color: "#cccccc", borderBottom: "1px solid #1a1a1a" },
+  tdLast: { padding: "0.9rem 1.25rem", fontSize: "0.875rem", color: "#cccccc" },
+  badgeActive: { backgroundColor: "#0a2a0a", color: "#22c55e", border: "1px solid #22c55e33", fontSize: "0.68rem", fontWeight: "600", padding: "0.2rem 0.6rem", borderRadius: "20px", textTransform: "uppercase", letterSpacing: "0.05em" },
+  badgeInactive: { backgroundColor: "transparent", border: "1px solid #2a2a2a", color: "#aaaaaa", fontSize: "0.68rem", fontWeight: "600", padding: "0.2rem 0.6rem", borderRadius: "20px", textTransform: "uppercase", letterSpacing: "0.05em" },
+  editBtn: { background: "none", border: "none", color: "#888", fontSize: "0.83rem", cursor: "pointer", marginRight: "0.75rem", transition: "color 0.15s" },
+  deleteBtn: { background: "none", border: "none", color: "#ff6b6b", fontSize: "0.83rem", cursor: "pointer", transition: "opacity 0.15s" },
+  overlay: { position: "fixed", inset: 0, backgroundColor: "rgba(0,0,0,0.7)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 200, padding: "1rem" },
+  modal: { backgroundColor: "#16161a", border: "1px solid #2a2a2a", borderRadius: "12px", padding: "2rem", width: "100%", maxWidth: "480px", maxHeight: "90vh", overflowY: "auto" },
+  modalHeader: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.5rem" },
+  modalTitle: { fontSize: "1.1rem", fontWeight: "600", color: "#ffffff" },
+  closeBtn: { background: "none", border: "none", color: "#888", fontSize: "0.9rem", cursor: "pointer" },
+  formGrid: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" },
+  formFull: { gridColumn: "1 / -1" },
+  label: { display: "block", fontSize: "0.68rem", fontWeight: "600", letterSpacing: "0.08em", color: "#888", textTransform: "uppercase", marginBottom: "0.4rem" },
+  input: { width: "100%", backgroundColor: "#111114", border: "1px solid #333", borderRadius: "6px", padding: "0.6rem 0.8rem", color: "#ffffff", fontSize: "0.875rem", outline: "none", boxSizing: "border-box" },
+  textarea: { width: "100%", backgroundColor: "#111114", border: "1px solid #333", borderRadius: "6px", padding: "0.6rem 0.8rem", color: "#ffffff", fontSize: "0.875rem", outline: "none", resize: "vertical", minHeight: "90px", boxSizing: "border-box", fontFamily: "inherit" },
+  select: { width: "100%", backgroundColor: "#111114", border: "1px solid #333", borderRadius: "6px", padding: "0.6rem 0.8rem", color: "#ffffff", fontSize: "0.875rem", outline: "none", boxSizing: "border-box" },
+  modalFooter: { display: "flex", justifyContent: "flex-end", gap: "0.75rem", marginTop: "1.5rem" },
+  cancelBtn: { background: "none", border: "1px solid #333", color: "#aaa", borderRadius: "7px", padding: "0.55rem 1.1rem", fontSize: "0.875rem", cursor: "pointer" },
+  saveBtn: { backgroundColor: "#a3e635", border: "none", color: "#0a0a0a", borderRadius: "7px", padding: "0.55rem 1.25rem", fontSize: "0.875rem", fontWeight: "700", cursor: "pointer" },
+  errorMsg: { color: "#ff6b6b", fontSize: "0.82rem", marginBottom: "1rem" },
 };
 
 const emptyForm = {
@@ -229,19 +38,19 @@ const emptyForm = {
 };
 
 function AdminPlans() {
-  const [plans, setPlans]         = useState([]);
-  const [loading, setLoading]     = useState(true);
+
+  const [plans, setPlans] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
-  const [editingPlan, setEditingPlan] = useState(null); // null = new
-  const [form, setForm]           = useState(emptyForm);
-  const [saving, setSaving]       = useState(false);
-  const [error, setError]         = useState("");
+  const [editingPlan, setEditingPlan] = useState(null);
+  const [form, setForm] = useState(emptyForm);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => { fetchPlans(); }, []);
 
   const fetchPlans = async () => {
     try {
-      // admin needs all plans including inactive — use admin endpoint
       const res = await api.get("/plans?all=true");
       setPlans(res.data);
     } catch {
@@ -261,13 +70,13 @@ function AdminPlans() {
   const openEdit = (plan) => {
     setEditingPlan(plan);
     setForm({
-      title:       plan.title,
-      category:    plan.category,
-      price:       String(plan.price),
+      title: plan.title,
+      category: plan.category,
+      price: String(plan.price),
       durationDays: String(plan.durationDays),
       description: plan.description || "",
-      features:    plan.features?.join("\n") || "",
-      isActive:    plan.isActive,
+      features: plan.features?.join("\n") || "",
+      isActive: plan.isActive,
     });
     setError("");
     setModalOpen(true);
@@ -296,13 +105,13 @@ function AdminPlans() {
       setSaving(true);
       setError("");
       const payload = {
-        title:        form.title,
-        category:     form.category,
-        price:        Number(form.price),
+        title: form.title,
+        category: form.category,
+        price: Number(form.price),
         durationDays: Number(form.durationDays),
-        description:  form.description,
-        features:     form.features.split("\n").map((f) => f.trim()).filter(Boolean),
-        isActive:     form.isActive,
+        description: form.description,
+        features: form.features.split("\n").map((f) => f.trim()).filter(Boolean),
+        isActive: form.isActive,
       };
       if (editingPlan) {
         await api.put(`/plans/${editingPlan._id}`, payload);
@@ -342,7 +151,7 @@ function AdminPlans() {
         <table style={s.table}>
           <thead>
             <tr>
-              {["Title","Category","Price","Duration","Features","Active",""].map((h) => (
+              {["Title", "Category", "Price", "Duration", "Features", "Active", ""].map((h) => (
                 <th key={h} style={s.th}>{h}</th>
               ))}
             </tr>
@@ -366,7 +175,7 @@ function AdminPlans() {
                     </span>
                   </td>
                   <td style={{ ...cell, textAlign: "right" }}>
-                    <button style={s.editBtn}   onClick={() => openEdit(plan)}>Edit</button>
+                    <button style={s.editBtn} onClick={() => openEdit(plan)}>Edit</button>
                     <button style={s.deleteBtn} onClick={() => handleDelete(plan._id)}>Delete</button>
                   </td>
                 </tr>

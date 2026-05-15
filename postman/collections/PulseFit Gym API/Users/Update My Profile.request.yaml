@@ -1,0 +1,16 @@
+$kind: http-request
+url: http://localhost:5000/api/users/me
+method: PUT
+headers:
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMDcxZjFjNzQzOWNlYzQzNmI4MDE3MiIsInJvbGUiOiJtZW1iZXIiLCJpYXQiOjE3Nzg4NTE2MTksImV4cCI6MTc3OTQ1NjQxOX0.RQ5bN-nYGIolTw_w0nOFYynjo5_2yrP-RY41YYGSYkY
+  Content-Type: application/json
+body:
+  type: text
+  content: "{\r
+
+    \    \"fullName\": \"Ahmed Hassan\",\r
+
+    \    \"phone\": \"555-0999\"\r
+
+    }"
+order: 2000

@@ -1,0 +1,22 @@
+$kind: http-request
+name: Login (Member)
+url: http://localhost:5000/api/auth/login
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: "{\r
+
+    \    \"email\": \"member2@gmail.com\",\r
+
+    \    \"password\": \"Test#1234\"\r
+
+    }"
+scripts:
+  - type: afterResponse
+    code: |-
+      const res = pm.response.json();
+      if (res.token) { pm.collectionVariables.set('token', res.token); }
+    language: text/javascript
+order: 2000

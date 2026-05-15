@@ -1,0 +1,25 @@
+$kind: http-request
+url: http://localhost:5000/api/auth/register
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: "{\r
+
+    \    \"fullName\": \"Member Two\",\r
+
+    \    \"email\": \"member2@gmail.com\",\r
+
+    \    \"password\": \"Test#1234\",\r
+
+    \    \"phone\": \"01011223344\"\r
+
+    }"
+scripts:
+  - type: afterResponse
+    code: |-
+      const res = pm.response.json();
+      if (res.token) { pm.collectionVariables.set('token', res.token); }
+    language: text/javascript
+order: 1000

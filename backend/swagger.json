@@ -1,0 +1,368 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "PulseFit Gym API",
+      "version": "1.0.0",
+      "description": "API Documentation for PulseFit Gym Management System"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3000/api",
+        "description": "Development Server"
+      }
+    ],
+    "components": {
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      }
+    },
+    "security": [
+      {
+        "bearerAuth": []
+      }
+    ],
+    "paths": {
+      "/auth/register": {
+        "post": {
+          "tags": ["Auth"],
+          "summary": "Register a new user",
+          "security": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fullName": { "type": "string" },
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
+                    "phone": { "type": "string" }
+                  },
+                  "required": ["fullName", "email", "password"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": { "description": "User registered successfully" },
+            "400": { "description": "Validation error or user already exists" }
+          }
+        }
+      },
+      "/auth/login": {
+        "post": {
+          "tags": ["Auth"],
+          "summary": "Login user",
+          "security": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": { "type": "string" },
+                    "password": { "type": "string" }
+                  },
+                  "required": ["email", "password"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": { "description": "Login successful" },
+            "400": { "description": "Invalid credentials" }
+          }
+        }
+      },
+      "/users/me": {
+        "get": {
+          "tags": ["Users"],
+          "summary": "Get current user profile",
+          "responses": {
+            "200": { "description": "User profile data" },
+            "401": { "description": "Not authenticated" }
+          }
+        },
+        "put": {
+          "tags": ["Users"],
+          "summary": "Update current user profile",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fullName": { "type": "string" },
+                    "phone": { "type": "string" },
+                    "password": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": { "description": "Profile updated" }
+          }
+        }
+      },
+      "/classes": {
+        "get": {
+          "tags": ["Classes"],
+          "summary": "Get all classes",
+          "security": [],
+          "responses": {
+            "200": { "description": "List of all classes" }
+          }
+        },
+        "post": {
+          "tags": ["Classes"],
+          "summary": "Create a new class (Admin only)",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "description": { "type": "string" },
+                    "instructor": { "type": "string" },
+                    "type": { "type": "string", "enum": ["HIIT", "Yoga", "Strength", "Cycling", "Mobility", "Boxing"] },
+                    "scheduledAt": { "type": "string", "format": "date-time" },
+                    "durationMinutes": { "type": "number" },
+                    "capacity": { "type": "number" },
+                    "intensity": { "type": "string", "enum": ["low", "moderate", "high"] }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": { "description": "Class created" },
+            "403": { "description": "Admin access required" }
+          }
+        }
+      },
+      "/classes/{id}": {
+        "get": {
+          "tags": ["Classes"],
+          "summary": "Get a specific class by ID",
+          "security": [],
+          "parameters": [
+            { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+          ],
+          "responses": {
+            "200": { "description": "Class data" },
+            "404": { "description": "Class not found" }
+          }
+        },
+        "put": {
+          "tags": ["Classes"],
+          "summary": "Update class (Admin only)",
+          "parameters": [
+            { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+          ],
+          "responses": {
+            "200": { "description": "Class updated" }
+          }
+        },
+        "delete": {
+          "tags": ["Classes"],
+          "summary": "Delete class (Admin only)",
+          "parameters": [
+            { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+          ],
+          "responses": {
+            "200": { "description": "Class deleted" }
+          }
+        }
+      },
+      "/bookings": {
+        "post": {
+          "tags": ["Bookings"],
+          "summary": "Book a class",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "classId": { "type": "string" }
+                  },
+                  "required": ["classId"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": { "description": "Booking successful" },
+            "400": { "description": "Class full or already booked" }
+          }
+        },
+        "get": {
+          "tags": ["Bookings"],
+          "summary": "Get all bookings (Admin only)",
+          "responses": {
+            "200": { "description": "List of all bookings" }
+          }
+        }
+      },
+      "/bookings/my": {
+        "get": {
+          "tags": ["Bookings"],
+          "summary": "Get current user's bookings",
+          "responses": {
+            "200": { "description": "List of user bookings" }
+          }
+        }
+      },
+      "/bookings/{id}/cancel": {
+        "patch": {
+          "tags": ["Bookings"],
+          "summary": "Cancel a booking",
+          "parameters": [
+            { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+          ],
+          "responses": {
+            "200": { "description": "Booking cancelled" },
+            "400": { "description": "Booking already cancelled" }
+          }
+        }
+      },
+      "/plans": {
+        "get": {
+          "tags": ["Plans"],
+          "summary": "Get all active plans (pass ?all=true for all plans)",
+          "security": [],
+          "parameters": [
+            { "name": "all", "in": "query", "schema": { "type": "string" } }
+          ],
+          "responses": {
+            "200": { "description": "List of plans" }
+          }
+        },
+        "post": {
+          "tags": ["Plans"],
+          "summary": "Create a new plan (Admin only)",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": { "type": "string" },
+                    "description": { "type": "string" },
+                    "price": { "type": "number" },
+                    "durationDays": { "type": "number" },
+                    "category": { "type": "string", "enum": ["Drop-in", "Monthly", "Annual"] },
+                    "features": { "type": "array", "items": { "type": "string" } },
+                    "isActive": { "type": "boolean" }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": { "description": "Plan created" }
+          }
+        }
+      },
+      "/subscriptions": {
+        "post": {
+          "tags": ["Subscriptions"],
+          "summary": "Subscribe to a plan",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "planId": { "type": "string" }
+                  },
+                  "required": ["planId"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": { "description": "Subscription successful" },
+            "400": { "description": "Already have an active plan" }
+          }
+        },
+        "get": {
+          "tags": ["Subscriptions"],
+          "summary": "Get all subscriptions (Admin only)",
+          "responses": {
+            "200": { "description": "List of all subscriptions" }
+          }
+        }
+      },
+      "/subscriptions/my": {
+        "get": {
+          "tags": ["Subscriptions"],
+          "summary": "Get current user's active subscription",
+          "responses": {
+            "200": { "description": "Active subscription details" }
+          }
+        }
+      },
+      "/products": {
+        "get": {
+          "tags": ["Products"],
+          "summary": "Get all products",
+          "security": [],
+          "responses": {
+            "200": { "description": "List of products" }
+          }
+        }
+      },
+      "/products/{id}/buy": {
+        "patch": {
+          "tags": ["Products"],
+          "summary": "Reserve a product (buy)",
+          "parameters": [
+            { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+          ],
+          "responses": {
+            "200": { "description": "Product reserved successfully" },
+            "400": { "description": "Out of stock" }
+          }
+        }
+      },
+      "/feedback": {
+        "post": {
+          "tags": ["Feedback"],
+          "summary": "Submit feedback",
+          "security": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rating": { "type": "number", "minimum": 1, "maximum": 5 },
+                    "memberName": { "type": "string" },
+                    "message": { "type": "string" }
+                  },
+                  "required": ["rating", "message"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": { "description": "Feedback submitted" }
+          }
+        }
+      }
+    }
+  }

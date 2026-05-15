@@ -4,7 +4,7 @@ const auth = require("../../middleware/auth");
 const admin = require("../../middleware/admin");
 const router = express.Router();
 
-// GET /api/plans — public, get all active plans
+//get all active plans
 router.get("/", async (req, res) => {
   try {
     const filter = req.query.all === "true" ? {} : { isActive: true };
@@ -15,18 +15,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// GET /api/plans/:id — public
-router.get("/:id", async (req, res) => {
-  try {
-    const plan = await Plan.findById(req.params.id);
-    if (!plan) return res.status(404).json({ message: "Plan not found" });
-    res.json(plan);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-// POST /api/plans — admin only
+//admin: add plan
 router.post("/", auth, admin, async (req, res) => {
   try {
     const plan = await Plan.create(req.body);
@@ -36,7 +25,7 @@ router.post("/", auth, admin, async (req, res) => {
   }
 });
 
-// PUT /api/plans/:id — admin only
+//admin: update plan
 router.put("/:id", auth, admin, async (req, res) => {
   try {
     const plan = await Plan.findByIdAndUpdate(req.params.id, req.body, {
@@ -50,7 +39,7 @@ router.put("/:id", auth, admin, async (req, res) => {
   }
 });
 
-// DELETE /api/plans/:id — admin only
+//admin: delete plan
 router.delete("/:id", auth, admin, async (req, res) => {
   try {
     const plan = await Plan.findByIdAndDelete(req.params.id);

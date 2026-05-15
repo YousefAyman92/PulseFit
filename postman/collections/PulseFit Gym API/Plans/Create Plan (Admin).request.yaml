@@ -1,0 +1,26 @@
+$kind: http-request
+url: http://localhost:5000/api/plans
+method: POST
+headers:
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZjUwYzM4MmVlNmVlMTllYTYzZWY0NiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3ODg1MTQ2MSwiZXhwIjoxNzc5NDU2MjYxfQ.CqXUwil3JzrSwNxd73kySyxZBVoq3nAzRiDi4nCBPG8
+  Content-Type: application/json
+body:
+  type: text
+  content: "{\r
+
+    \    \"title\": \"Senior Flex\",\r
+
+    \    \"category\": \"Monthly\",\r
+
+    \    \"price\": 24,\r
+
+    \    \"durationDays\": 30,\r
+
+    \    \"description\": \"Discounted access for members 60 and above.\",\r
+
+    \    \"features\": [\"Open gym 6am-8pm\", \"Locker service\", \"Free mobility class per week\"],\r
+
+    \    \"isActive\": true\r
+
+    }"
+order: 3000

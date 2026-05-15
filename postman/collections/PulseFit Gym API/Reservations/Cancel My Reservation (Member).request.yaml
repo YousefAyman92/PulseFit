@@ -1,0 +1,6 @@
+$kind: http-request
+url: http://localhost:5000/api/reservations/69fdac0633aa6e5f9727b04c/cancel
+method: PATCH
+headers:
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMDcxZjFjNzQzOWNlYzQzNmI4MDE3MiIsInJvbGUiOiJtZW1iZXIiLCJpYXQiOjE3Nzg4NTE2MTksImV4cCI6MTc3OTQ1NjQxOX0.RQ5bN-nYGIolTw_w0nOFYynjo5_2yrP-RY41YYGSYkY
+order: 6000

@@ -5,7 +5,7 @@ const auth = require("../../middleware/auth");
 const admin = require("../../middleware/admin");
 const router = express.Router();
 
-// GET /api/subscriptions/my — get current user's active subscription
+//get current user's subscription
 router.get("/my", auth, async (req, res) => {
   try {
     const subscription = await Subscription.findOne({
@@ -18,12 +18,12 @@ router.get("/my", auth, async (req, res) => {
   }
 });
 
-// POST /api/subscriptions — subscribe to a plan (one active plan at a time)
+//subscribe to a plan (one active plan at a time)
 router.post("/", auth, async (req, res) => {
   try {
     const { planId } = req.body;
 
-    // Check user doesn't already have an active subscription
+    // Check user doesn't already have active subscription
     const existing = await Subscription.findOne({
       userId: req.user.id,
       status: "active",
@@ -60,7 +60,7 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-// PATCH /api/subscriptions/:id/cancel — cancel subscription
+//cancel subscription
 router.patch("/:id/cancel", auth, async (req, res) => {
   try {
     const subscription = await Subscription.findOne({
@@ -69,9 +69,6 @@ router.patch("/:id/cancel", auth, async (req, res) => {
     });
     if (!subscription)
       return res.status(404).json({ message: "Subscription not found" });
-    if (subscription.status !== "active") {
-      return res.status(400).json({ message: "Subscription is not active" });
-    }
 
     subscription.status = "cancelled";
     await subscription.save();
@@ -81,7 +78,7 @@ router.patch("/:id/cancel", auth, async (req, res) => {
   }
 });
 
-// GET /api/subscriptions — admin: get all subscriptions
+//admin: get all subscriptions
 router.get("/", auth, admin, async (req, res) => {
   try {
     const subscriptions = await Subscription.find()

@@ -1,0 +1,14 @@
+$kind: http-request
+url: http://localhost:5000/api/bookings
+method: POST
+headers:
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMDcxZjFjNzQzOWNlYzQzNmI4MDE3MiIsInJvbGUiOiJtZW1iZXIiLCJpYXQiOjE3Nzg4NTE2MTksImV4cCI6MTc3OTQ1NjQxOX0.RQ5bN-nYGIolTw_w0nOFYynjo5_2yrP-RY41YYGSYkY
+  Content-Type: application/json
+body:
+  type: text
+  content: "{\r
+
+    \    \"classId\": \"69f3227df0d5c032bdb716cf\"\r
+
+    }"
+order: 1000

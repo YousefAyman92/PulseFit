@@ -5,74 +5,16 @@ import api from "../utils/api";
 import PlanCard from "../components/PlanCard";
 
 const s = {
-  page: {
-    minHeight: "calc(100vh - 60px)",
-    backgroundColor: "#09090b",
-    padding: "3rem 2rem",
-  },
-
-  inner: {
-    maxWidth: "1100px",
-    margin: "0 auto",
-  },
-
-  header: {
-    textAlign: "center",
-    marginBottom: "2.5rem",
-  },
-
-  title: {
-    fontSize: "2rem",
-    fontWeight: "700",
-    color: "#ffffff",
-    letterSpacing: "-0.02em",
-    marginBottom: "0.5rem",
-  },
-
-  subtitle: {
-    fontSize: "0.9rem",
-    color: "#888",
-  },
-
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)",
-    gap: "1rem",
-  },
-
-  loading: {
-    textAlign: "center",
-    color: "#888",
-    padding: "3rem",
-  },
-
-  error: {
-    textAlign: "center",
-    color: "#ff6b6b",
-    padding: "3rem",
-  },
-
-  successMsg: {
-    backgroundColor: "#0f2d1a",
-    border: "1px solid #166534",
-    color: "#4ade80",
-    borderRadius: "8px",
-    padding: "0.75rem 1rem",
-    fontSize: "0.875rem",
-    marginBottom: "1.5rem",
-    textAlign: "center",
-  },
-
-  errorMsg: {
-    backgroundColor: "#2a1010",
-    border: "1px solid #5a1a1a",
-    color: "#ff6b6b",
-    borderRadius: "8px",
-    padding: "0.75rem 1rem",
-    fontSize: "0.875rem",
-    marginBottom: "1.5rem",
-    textAlign: "center",
-  },
+  page: { minHeight: "calc(100vh - 60px)", backgroundColor: "#09090b", padding: "3rem 2rem", },
+  inner: { maxWidth: "1100px", margin: "0 auto", },
+  header: { textAlign: "center", marginBottom: "2.5rem", },
+  title: { fontSize: "2rem", fontWeight: "700", color: "#ffffff", letterSpacing: "-0.02em", marginBottom: "0.5rem", },
+  subtitle: { fontSize: "0.9rem", color: "#888", },
+  grid: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem", },
+  loading: { textAlign: "center", color: "#888", padding: "3rem", },
+  error: { textAlign: "center", color: "#ff6b6b", padding: "3rem", },
+  successMsg: { backgroundColor: "#0f2d1a", border: "1px solid #166534", color: "#4ade80", borderRadius: "8px", padding: "0.75rem 1rem", fontSize: "0.875rem", marginBottom: "1.5rem", textAlign: "center", },
+  errorMsg: { backgroundColor: "#2a1010", border: "1px solid #5a1a1a", color: "#ff6b6b", borderRadius: "8px", padding: "0.75rem 1rem", fontSize: "0.875rem", marginBottom: "1.5rem", textAlign: "center", },
 };
 
 function Plans() {

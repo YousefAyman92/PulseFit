@@ -1,0 +1,26 @@
+$kind: http-request
+url: http://localhost:5000/api/products
+method: POST
+headers:
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZjUwYzM4MmVlNmVlMTllYTYzZWY0NiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3ODg1MTQ2MSwiZXhwIjoxNzc5NDU2MjYxfQ.CqXUwil3JzrSwNxd73kySyxZBVoq3nAzRiDi4nCBPG8
+  Content-Type: application/json
+body:
+  type: text
+  content: "{\r
+
+    \    \"name\": \"Creatine Monohydrate (300g)\",\r
+
+    \    \"description\": \"Pure micronized creatine. Unflavored. 60 servings.\",\r
+
+    \    \"category\": \"supplements\",\r
+
+    \    \"price\": 24.99,\r
+
+    \    \"stock\": 40,\r
+
+    \    \"imageUrl\": \"https://images.unsplash.com/photo-1593095948071-474c5cc2989d?q=80&w=800\",\r
+
+    \    \"isActive\": true\r
+
+    }"
+order: 3000

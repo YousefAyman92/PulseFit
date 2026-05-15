@@ -1,0 +1,22 @@
+$kind: http-request
+url: http://localhost:5000/api/equipment
+method: POST
+headers:
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZjUwYzM4MmVlNmVlMTllYTYzZWY0NiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3ODg1MTQ2MSwiZXhwIjoxNzc5NDU2MjYxfQ.CqXUwil3JzrSwNxd73kySyxZBVoq3nAzRiDi4nCBPG8
+  Content-Type: application/json
+body:
+  type: text
+  content: "{\r
+
+    \    \"name\": \"Assault Bike #3\",\r
+
+    \    \"category\": \"Cardio\",\r
+
+    \    \"location\": \"Cardio Floor\",\r
+
+    \    \"status\": \"available\",\r
+
+    \    \"notes\": \"New unit installed March 2026\"\r
+
+    }"
+order: 2000

@@ -1,0 +1,6 @@
+$kind: http-request
+url: http://localhost:5000/api/subscriptions
+method: GET
+headers:
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZjUwYzM4MmVlNmVlMTllYTYzZWY0NiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3ODg1MTQ2MSwiZXhwIjoxNzc5NDU2MjYxfQ.CqXUwil3JzrSwNxd73kySyxZBVoq3nAzRiDi4nCBPG8
+order: 4000

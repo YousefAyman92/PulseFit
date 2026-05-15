@@ -3,16 +3,26 @@ const express = require("express");
 const connectDB = require("./config/db");
 const routes = require("./routes");
 const cors = require("cors");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./config/swagger");
 
 dotenv.config();
 connectDB();
 
 const app = express();
 
-
 // Middleware
 app.use(cors({ origin: process.env.CLIENT_URL }));
 app.use(express.json());
+
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, {
+    customSiteTitle: "PulseFit API Docs",
+    customCss: ".swagger-ui .topbar { background-color: #0a0a0a; }",
+  })
+);
 
 // Main API router
 app.use("/api", routes);

@@ -1,0 +1,8 @@
+$kind: collection
+description: Complete REST API collection for the PulseFit gym management platform.
+variables:
+  baseUrl: http://localhost:5000/api
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMDcxZjFjNzQzOWNlYzQzNmI4MDE3MiIsInJvbGUiOiJtZW1iZXIiLCJpYXQiOjE3Nzg4NTE2MTksImV4cCI6MTc3OTQ1NjQxOX0.RQ5bN-nYGIolTw_w0nOFYynjo5_2yrP-RY41YYGSYkY
+  adminToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZjUwYzM4MmVlNmVlMTllYTYzZWY0NiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3ODg1MTQ2MSwiZXhwIjoxNzc5NDU2MjYxfQ.CqXUwil3JzrSwNxd73kySyxZBVoq3nAzRiDi4nCBPG8
+  adminId: 69f50c382ee6ee19ea63ef46
+  memberId: 6a071f1c7439cec436b80172

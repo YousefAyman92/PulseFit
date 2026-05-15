@@ -1,0 +1,17 @@
+$kind: http-request
+url: http://localhost:5000/api/feedback
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: "{\r
+
+    \    \"memberName\": \"Ahmed Hassan\",\r
+
+    \    \"message\": \"Amazing classes and super clean facilities! The HIIT class with Marcus is the highlight of my week.\",\r
+
+    \    \"rating\": 5\r
+
+    }"
+order: 1000

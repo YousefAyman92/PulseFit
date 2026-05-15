@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+
 function getPeriod(plan) {
   if (plan.category === "Drop-in") return "/day";
   if (plan.category === "Annual") return "/year";
@@ -5,114 +7,50 @@ function getPeriod(plan) {
 }
 
 const s = {
-  card: {
-    backgroundColor: "#16161a",
-    border: "1px solid #2a2a2a",
-    borderRadius: "10px",
-    padding: "1.5rem",
-    display: "flex",
-    flexDirection: "column",
-  },
-
-  categoryLabel: {
-    fontSize: "0.68rem",
-    fontWeight: "600",
-    letterSpacing: "0.1em",
-    textTransform: "uppercase",
-    color: "#a3e635",
-    marginBottom: "0.3rem",
-  },
-
-  planTitle: {
-    fontSize: "1.15rem",
-    fontWeight: "700",
-    color: "#ffffff",
-    marginBottom: "0.5rem",
-  },
-
-  description: {
-    fontSize: "0.82rem",
-    color: "#888",
-    lineHeight: "1.5",
-    marginBottom: "1.25rem",
-  },
-
-  priceRow: {
-    display: "flex",
-    alignItems: "baseline",
-    gap: "0.15rem",
-    marginBottom: "1.25rem",
-  },
-
-  priceDollar: {
-    fontSize: "2rem",
-    fontWeight: "700",
-    color: "#ffffff",
-    letterSpacing: "-0.02em",
-  },
-
-  pricePeriod: {
-    fontSize: "0.8rem",
-    color: "#888",
-  },
-
-  featuresList: {
-    listStyle: "none",
-    padding: 0,
-    margin: "0 0 1.5rem",
-    display: "flex",
-    flexDirection: "column",
-    gap: "0.45rem",
-    flexGrow: 1,
-  },
-
-  featureItem: {
-    display: "flex",
-    alignItems: "center",
-    gap: "0.5rem",
-    fontSize: "0.83rem",
-    color: "#cccccc",
-  },
-
-  check: {
-    color: "#a3e635",
-    fontSize: "0.85rem",
-    flexShrink: 0,
-  },
-
-  btnOutline: {
-    width: "100%",
-    backgroundColor: "transparent",
-    border: "1px solid #333",
-    color: "#ffffff",
-    borderRadius: "7px",
-    padding: "0.65rem",
-    fontSize: "0.875rem",
-    fontWeight: "500",
-    cursor: "pointer",
-    marginTop: "auto",
-  },
+  card: { backgroundColor: "#16161a", border: "none", borderRadius: "10px", padding: "1.5rem", display: "flex", flexDirection: "column", transition: "box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out", cursor: "default", position: "relative", boxShadow: "0 0 0 1px #2a2a2a", },
+  cardHover: { boxShadow: "0 0 0 1px #a3e635, 0 0 15px rgba(163, 230, 53, 0.2)", transform: "translateY(-4px)", },
+  categoryLabel: { fontSize: "0.68rem", fontWeight: "600", letterSpacing: "0.1em", textTransform: "uppercase", color: "#a3e635", marginBottom: "0.3rem", },
+  planTitle: { fontSize: "1.15rem", fontWeight: "700", color: "#ffffff", marginBottom: "0.5rem", },
+  description: { fontSize: "0.82rem", color: "#888", lineHeight: "1.5", marginBottom: "1.25rem", },
+  priceRow: { display: "flex", alignItems: "baseline", gap: "0.15rem", marginBottom: "1.25rem", },
+  priceDollar: { fontSize: "2rem", fontWeight: "700", color: "#ffffff", letterSpacing: "-0.02em", },
+  pricePeriod: { fontSize: "0.8rem", color: "#888", },
+  featuresList: { listStyle: "none", padding: 0, margin: "0 0 1.5rem", display: "flex", flexDirection: "column", gap: "0.45rem", flexGrow: 1, },
+  featureItem: { display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.83rem", color: "#cccccc", },
+  check: { color: "#a3e635", fontSize: "0.85rem", flexShrink: 0, },
+  btnOutline: { width: "100%", backgroundColor: "transparent", border: "1px solid #333", color: "#ffffff", borderRadius: "7px", padding: "0.65rem", fontSize: "0.875rem", fontWeight: "500", cursor: "pointer", marginTop: "auto", transition: "all 0.2s ease", },
+  btnHover: { backgroundColor: "#a3e635", borderColor: "#a3e635", color: "#000000", },
 };
 
 function PlanCard({ plan, onSubscribe, subscribing }) {
+  const [isCardHovered, setIsCardHovered] = useState(false);
+  const [isBtnHovered, setIsBtnHovered] = useState(false);
+
+  const cardStyle = {
+    ...s.card,
+    ...(isCardHovered ? s.cardHover : {}),
+  };
+
+  const btnStyle = {
+    ...s.btnOutline,
+    ...(isBtnHovered ? s.btnHover : {}),
+    opacity: subscribing === plan._id ? 0.5 : 1,
+    cursor: subscribing === plan._id ? "not-allowed" : "pointer",
+  };
+
   return (
-    <div style={s.card}>
+    <div
+      style={cardStyle}
+      onMouseEnter={() => setIsCardHovered(true)}
+      onMouseLeave={() => setIsCardHovered(false)}
+    >
       <div style={s.categoryLabel}>{plan.category}</div>
-
       <div style={s.planTitle}>{plan.title}</div>
-
-      <div style={s.description}>
-        {plan.description}
-      </div>
+      <div style={s.description}>{plan.description}</div>
 
       <div style={s.priceRow}>
-        <span style={s.priceDollar}>
-          ${plan.price}
-        </span>
-
-        <span style={s.pricePeriod}>
-          {getPeriod(plan)}
-        </span>
+        <span style={s.priceDollar}>${plan.price}</span>
+        <span style={s.pricePeriod}>{getPeriod(plan)}</span>
       </div>
 
       <ul style={s.featuresList}>
@@ -125,16 +63,18 @@ function PlanCard({ plan, onSubscribe, subscribing }) {
       </ul>
 
       <button
-        style={s.btnOutline}
-        onClick={() => onSubscribe(plan)}
+        style={btnStyle}
+        onMouseEnter={() => setIsBtnHovered(true)}
+        onMouseLeave={() => setIsBtnHovered(false)}
+        onClick={(e) => {
+          e.stopPropagation();
+          onSubscribe(plan);
+        }}
         disabled={subscribing === plan._id}
       >
-        {subscribing === plan._id
-          ? "Processing..."
-          : "Subscribe"}
+        {subscribing === plan._id ? "Processing..." : "Subscribe"}
       </button>
-    </div >
+    </div>
   );
 }
-
 export default PlanCard;

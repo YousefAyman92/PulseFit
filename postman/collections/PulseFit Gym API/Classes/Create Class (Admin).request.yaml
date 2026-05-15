@@ -1,0 +1,28 @@
+$kind: http-request
+url: http://localhost:5000/api/classes
+method: POST
+headers:
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZjUwYzM4MmVlNmVlMTllYTYzZWY0NiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3ODg1MTQ2MSwiZXhwIjoxNzc5NDU2MjYxfQ.CqXUwil3JzrSwNxd73kySyxZBVoq3nAzRiDi4nCBPG8
+  Content-Type: application/json
+body:
+  type: text
+  content: "{\r
+
+    \    \"name\": \"Evening Yoga Flow\",\r
+
+    \    \"instructor\": \"Priya Natarajan\",\r
+
+    \    \"type\": \"Yoga\",\r
+
+    \    \"intensity\": \"low\",\r
+
+    \    \"scheduledAt\": \"2026-06-01T18:00:00.000Z\",\r
+
+    \    \"durationMinutes\": 60,\r
+
+    \    \"capacity\": 20,\r
+
+    \    \"description\": \"Relaxing evening flow with breathwork and stretching.\"\r
+
+    }"
+order: 2000

@@ -14,17 +14,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// GET single class — public
-router.get("/:id", async (req, res) => {
-  try {
-    const gymClass = await Class.findById(req.params.id);
-    if (!gymClass) return res.status(404).json({ message: "Class not found" });
-    res.json(gymClass);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
 // POST create — admin only  ← was missing auth+admin
 router.post("/", auth, admin, async (req, res) => {
   try {

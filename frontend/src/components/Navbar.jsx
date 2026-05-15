@@ -3,19 +3,28 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const styles = {
-  logoWrap: { display: "flex", alignItems: "center", gap: "0.5rem", textDecoration: "none" },
-  logoText: { color: "#ffffff", fontWeight: "700", fontSize: "1rem" },
+  logoWrap: {
+    display: "flex",
+    alignItems: "center",
+    gap: "0.5rem",
+    textDecoration: "none",
+  },
+  logoText: {
+    color: "#ffffff",
+    fontWeight: "700",
+    fontSize: "1rem",
+  },
   nav: {
     background: "transparent",
     borderBottom: "1px solid rgba(255,255,255,0.08)",
     height: "60px",
-    position: "fixed",
+    position: "sticky", // Or "fixed" if you want it to overlap content
     top: 0,
     left: 0,
     width: "100%",
     zIndex: 100,
     backdropFilter: "blur(8px)",
-    transition: "transform 0.3s ease-in-out",
+    transition: "transform 0.3s ease-in-out", // Smooth slide animation
   },
   inner: {
     maxWidth: "1100px",
@@ -26,6 +35,11 @@ const styles = {
     justifyContent: "space-between",
     padding: "0 2rem",
     position: "relative",
+  },
+  left: {
+    display: "flex",
+    alignItems: "center",
+    flex: 1,
   },
   center: {
     position: "absolute",
@@ -48,10 +62,28 @@ const styles = {
     whiteSpace: "nowrap",
     color: "#aaaaaa",
   },
-  navLinkActive: { color: "#a3e635", fontWeight: "500" },
-  navLinkHover: { color: "#ffffff" },
-  right: { display: "flex", alignItems: "center", gap: "0.75rem", flex: 1, justifyContent: "flex-end" },
-  signInLink: { color: "#aaaaaa", textDecoration: "none", fontSize: "0.9rem", padding: "0.3rem 0.5rem" },
+  navLinkActive: {
+    color: "#a3e635",
+    fontWeight: "500",
+  },
+  navLinkHover: {
+    color: "#ffffff",
+  },
+  right: {
+    display: "flex",
+    alignItems: "center",
+    gap: "0.75rem",
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+  signInLink: {
+    color: "#aaaaaa",
+    textDecoration: "none",
+    fontSize: "0.9rem",
+    fontWeight: "400",
+    padding: "0.3rem 0.5rem",
+    transition: "color 0.15s",
+  },
   joinBtn: {
     backgroundColor: "#a3e635",
     color: "#0a0a0a",
@@ -64,10 +96,30 @@ const styles = {
     textDecoration: "none",
     display: "inline-flex",
     alignItems: "center",
+    whiteSpace: "nowrap",
   },
-  userText: { color: "#aaaaaa", fontSize: "0.875rem" },
-  signOutBtn: { background: "none", border: "none", color: "#aaaaaa", fontSize: "0.9rem", cursor: "pointer" },
-  adminLink: { color: "#a3e635", textDecoration: "none", fontSize: "0.9rem", fontWeight: "500" },
+  userText: {
+    color: "#aaaaaa",
+    fontSize: "0.875rem",
+    whiteSpace: "nowrap",
+  },
+  signOutBtn: {
+    background: "none",
+    border: "none",
+    color: "#aaaaaa",
+    fontSize: "0.9rem",
+    cursor: "pointer",
+    padding: "0.3rem 0.5rem",
+    transition: "color 0.15s",
+    whiteSpace: "nowrap",
+  },
+  adminLink: {
+    color: "#a3e635",
+    textDecoration: "none",
+    fontSize: "0.9rem",
+    fontWeight: "500",
+    padding: "0.3rem 0.5rem",
+  },
 };
 
 function Navbar() {
@@ -75,60 +127,80 @@ function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [hoveredLink, setHoveredLink] = useState("");
-  
 
-  const [hidden, setHidden] = useState(false);
+  // --- SCROLL TO HIDE LOGIC ---
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
-    let lastY = window.scrollY;
-    const handleScroll = () => {
-      const currentY = window.scrollY;
-      // Hide if scrolling down
-      setHidden(currentY > lastY && currentY > 50);
-      lastY = currentY;
+    const controlNavbar = () => {
+      if (typeof window !== "undefined") {
+        if (window.scrollY > lastScrollY && window.scrollY > 100) {
+          // Scrolling down
+          setIsVisible(false);
+        } else {
+          // Scrolling up
+          setIsVisible(true);
+        }
+        // Remember current scroll position for next time
+        setLastScrollY(window.scrollY);
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    window.addEventListener("scroll", controlNavbar);
+    return () => window.removeEventListener("scroll", controlNavbar);
+  }, [lastScrollY]);
+  // ---------------------------
 
-  const handleLogout = () => { logout(); navigate("/"); };
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
-  const navLinks = (user ? [
+  const publicLinks = [
+    { label: "Home", to: "/" },
+    { label: "Plans", to: "/plans" },
+    { label: "Classes", to: "/classes" },
+    { label: "Market", to: "/market" },
+    { label: "Feedback", to: "/feedback" },
+  ];
+
+  const memberLinks = [
     { label: "Home", to: "/" },
     { label: "Plans", to: "/plans" },
     { label: "Classes", to: "/classes" },
     { label: "Market", to: "/market" },
     { label: "Feedback", to: "/feedback" },
     { label: "My Account", to: "/account" },
-  ] : [
-    { label: "Home", to: "/" },
-    { label: "Plans", to: "/plans" },
-    { label: "Classes", to: "/classes" },
-    { label: "Market", to: "/market" },
-    { label: "Feedback", to: "/feedback" },
-  ]);
+  ];
+
+  const navLinks = user ? memberLinks : publicLinks;
 
   const getLinkStyle = (to) => {
     const isActive = location.pathname === to;
+    const isHovered = hoveredLink === to;
     return {
       ...styles.navLink,
       ...(isActive ? styles.navLinkActive : {}),
-      ...(hoveredLink === to && !isActive ? styles.navLinkHover : {}),
+      ...(isHovered && !isActive ? styles.navLinkHover : {}),
     };
   };
 
   return (
-    <nav style={{ 
-      ...styles.nav, 
-      transform: hidden ? "translateY(-100%)" : "translateY(0)" 
-    }}>
+    <nav 
+      style={{ 
+        ...styles.nav, 
+        transform: isVisible ? "translateY(0)" : "translateY(-100%)" 
+      }}
+    >
       <div style={styles.inner}>
+        {/* LEFT-logo*/}
         <Link to="/" style={styles.logoWrap}>
-          <img src="/logo.svg" alt="logo" width="40" height="40" />
+          <img src="/logo.svg" alt="PulseFit logo" width="40" height="40" />
           <span style={styles.logoText}>PulseFit</span>
         </Link>
 
+        {/* CENTER — nav links */}
         <ul style={styles.center}>
           {navLinks.map((link) => (
             <li key={link.to}>
@@ -144,12 +216,17 @@ function Navbar() {
           ))}
         </ul>
 
+        {/* RIGHT — auth */}
         <div style={styles.right}>
           {user ? (
             <>
-              {user.role === "admin" && <Link to="/admin" style={styles.adminLink}>Admin</Link>}
+              {user.role === "admin" && (
+                <Link to="/admin" style={styles.adminLink}>Admin</Link>
+              )}
               <span style={styles.userText}>{user.fullName}</span>
-              <button style={styles.signOutBtn} onClick={handleLogout}>Sign out</button>
+              <button style={styles.signOutBtn} onClick={handleLogout}>
+                Sign out
+              </button>
             </>
           ) : (
             <>

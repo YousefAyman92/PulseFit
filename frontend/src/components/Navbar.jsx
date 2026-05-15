@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
@@ -18,13 +18,12 @@ const styles = {
     background: "transparent",
     borderBottom: "1px solid rgba(255,255,255,0.08)",
     height: "60px",
-    position: "sticky", // Or "fixed" if you want it to overlap content
+    position: "sticky",
     top: 0,
     left: 0,
     width: "100%",
     zIndex: 100,
     backdropFilter: "blur(8px)",
-    transition: "transform 0.3s ease-in-out", // Smooth slide animation
   },
   inner: {
     maxWidth: "1100px",
@@ -63,7 +62,7 @@ const styles = {
     color: "#aaaaaa",
   },
   navLinkActive: {
-    color: "#a3e635",
+    color: "#a3e635",   // ← green when active
     fontWeight: "500",
   },
   navLinkHover: {
@@ -128,35 +127,12 @@ function Navbar() {
   const location = useLocation();
   const [hoveredLink, setHoveredLink] = useState("");
 
-  // --- SCROLL TO HIDE LOGIC ---
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-
-  useEffect(() => {
-    const controlNavbar = () => {
-      if (typeof window !== "undefined") {
-        if (window.scrollY > lastScrollY && window.scrollY > 100) {
-          // Scrolling down
-          setIsVisible(false);
-        } else {
-          // Scrolling up
-          setIsVisible(true);
-        }
-        // Remember current scroll position for next time
-        setLastScrollY(window.scrollY);
-      }
-    };
-
-    window.addEventListener("scroll", controlNavbar);
-    return () => window.removeEventListener("scroll", controlNavbar);
-  }, [lastScrollY]);
-  // ---------------------------
-
   const handleLogout = () => {
     logout();
     navigate("/");
   };
 
+  // Build nav links based on auth state
   const publicLinks = [
     { label: "Home", to: "/" },
     { label: "Plans", to: "/plans" },
@@ -187,12 +163,7 @@ function Navbar() {
   };
 
   return (
-    <nav 
-      style={{ 
-        ...styles.nav, 
-        transform: isVisible ? "translateY(0)" : "translateY(-100%)" 
-      }}
-    >
+    <nav style={styles.nav}>
       <div style={styles.inner}>
         {/* LEFT-logo*/}
         <Link to="/" style={styles.logoWrap}>
@@ -235,6 +206,7 @@ function Navbar() {
             </>
           )}
         </div>
+
       </div>
     </nav>
   );

@@ -7,6 +7,7 @@ const router = express.Router();
 const passwordRegex =
   /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>_\-\\[\]\\/]).{8,}$/;
 
+// /auth.js/register "Register"
 router.post("/register", async (req, res) => {
   try {
     const { fullName, email, password, phone } = req.body;
@@ -78,6 +79,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
+// /auth.js/login "Login"
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;

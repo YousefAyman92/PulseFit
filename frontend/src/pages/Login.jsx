@@ -8,9 +8,9 @@ const styles = {
         minHeight: "calc(100vh - 60px)",
         backgroundColor: "#09090b",
         display: "flex",
-        alignItems: "flex-start",        // ← was "center"
+        alignItems: "flex-start", 
         justifyContent: "center",
-        paddingTop: "80px",              // ← raises the card
+        paddingTop: "80px",
         paddingBottom: "2rem",
         paddingLeft: "1rem",
         paddingRight: "1rem",
@@ -46,8 +46,8 @@ const styles = {
   inputWrap: { marginBottom: "1.25rem" },
   input: {
     width: "100%",
-    backgroundColor: "#141414",     // ← updated
-    border: "1px solid #333333",    // ← updated
+    backgroundColor: "#141414",
+    border: "1px solid #333333",
     borderRadius: "6px",
     padding: "0.65rem 0.9rem",
     color: "#ffffff",
@@ -83,7 +83,7 @@ const styles = {
     marginBottom: "1.25rem",
   },
   demoBox: {
-    backgroundColor: "#141414",     // ← updated
+    backgroundColor: "#141414",
     borderLeft: "3px solid #a3e635",
     borderRadius: "4px",
     padding: "0.75rem 1rem",

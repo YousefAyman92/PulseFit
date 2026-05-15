@@ -5,7 +5,7 @@ const routes = require("./routes");
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./config/swagger");
-const startSubscriptionChecker = require('./jobs/subscriptionChecker');
+const startSubscriptionChecker = require("./jobs/subscriptionChecker");
 
 dotenv.config();
 connectDB();
@@ -27,11 +27,6 @@ app.use(
 
 // Main API router
 app.use("/api", routes);
-
-// Routes
-app.get("/api", (req, res) => {
-  res.json({ message: "Welcome to Gym Project!" });
-});
 
 // Page not found middleware
 app.use((req, res, next) => {

@@ -3,15 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import api from "../utils/api";
 
-// only the styles object changes — everything else stays identical
 const styles = {
     page: {
       minHeight: "calc(100vh - 60px)",
       backgroundColor: "#09090b",
       display: "flex",
-      alignItems: "flex-start",        // ← was "center"
+      alignItems: "flex-start",
       justifyContent: "center",
-      paddingTop: "80px",              // ← raises the card
+      paddingTop: "80px",
       paddingBottom: "2rem",
       paddingLeft: "1rem",
       paddingRight: "1rem",
@@ -87,7 +86,6 @@ const styles = {
     },
   };
 
-// ← updated to 8 chars minimum
 function validate(form) {
   const errors = {};
   if (!form.fullName.trim()) errors.fullName = "Full name is required.";

@@ -126,7 +126,6 @@ const s = {
     transition: "color 0.15s",
     padding: 0,
   },
-  // ── Modal shared ──
   overlay: {
     position: "fixed",
     inset: 0,
@@ -303,13 +302,12 @@ function AdminMembers() {
   const [loading,     setLoading]     = useState(true);
   const [search,      setSearch]      = useState("");
 
-  // Modal state
   const [newModal,    setNewModal]    = useState(false);
   const [editModal,   setEditModal]   = useState(false);
   const [viewModal,   setViewModal]   = useState(false);
 
   const [selectedMember, setSelectedMember] = useState(null);
-  const [viewData,       setViewData]       = useState(null); // { user, subscriptions, bookings }
+  const [viewData,       setViewData]       = useState(null);
 
   const [newForm,  setNewForm]  = useState(emptyNewForm);
   const [editForm, setEditForm] = useState({});
@@ -329,13 +327,13 @@ function AdminMembers() {
     }
   };
 
-  // Live search with small debounce
+  // Live search
   useEffect(() => {
     const t = setTimeout(() => fetchMembers(search), 300);
     return () => clearTimeout(t);
   }, [search]);
 
-  // ── NEW member ──
+  // New member
   const openNew = () => {
     setNewForm(emptyNewForm);
     setError("");
@@ -364,7 +362,7 @@ function AdminMembers() {
     }
   };
 
-  // ── EDIT member ──
+  // Edit member
   const openEdit = (member) => {
     setSelectedMember(member);
     setEditForm({
@@ -392,7 +390,7 @@ function AdminMembers() {
       setSaving(true);
       setError("");
       const payload = { ...editForm };
-      if (!payload.password) delete payload.password; // don't send empty password
+      if (!payload.password) delete payload.password;
       await api.put(`/users/${selectedMember._id}`, payload);
       await fetchMembers(search);
       setEditModal(false);
@@ -403,13 +401,12 @@ function AdminMembers() {
     }
   };
 
-  // ── VIEW member ──
+  // View member
   const openView = async (member) => {
     setSelectedMember(member);
     setViewData(null);
     setViewModal(true);
     try {
-      // Fetch subscriptions and bookings for this user (admin endpoints)
       const [subRes, bookRes] = await Promise.all([
         api.get("/subscriptions"),
         api.get("/bookings"),
@@ -426,7 +423,7 @@ function AdminMembers() {
     }
   };
 
-  // ── DELETE member ──
+  // Delete member
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this member?")) return;
     try {
@@ -448,7 +445,7 @@ function AdminMembers() {
 
   return (
     <>
-      {/* ── Top bar ── */}
+      {/* Top bar */}
       <div style={s.topBar}>
         <div style={s.titleBlock}>
           <h1 style={s.pageTitle}>Members</h1>
@@ -465,7 +462,7 @@ function AdminMembers() {
         </div>
       </div>
 
-      {/* ── Table ── */}
+      {/* Table */}
       <div style={s.tableWrap}>
         <table style={s.table}>
           <thead>
@@ -538,9 +535,7 @@ function AdminMembers() {
         </table>
       </div>
 
-      {/* ══════════════════════════════════════
-          NEW MEMBER MODAL
-      ══════════════════════════════════════ */}
+      {/* NEW MEMBER MODAL */}
       {newModal && (
         <div style={s.overlay} onClick={(e) => e.target === e.currentTarget && closeAll()}>
           <div style={s.modal}>
@@ -616,9 +611,7 @@ function AdminMembers() {
         </div>
       )}
 
-      {/* ══════════════════════════════════════
-          EDIT MEMBER MODAL
-      ══════════════════════════════════════ */}
+      {/* EDIT MEMBER MODAL */}
       {editModal && selectedMember && (
         <div style={s.overlay} onClick={(e) => e.target === e.currentTarget && closeAll()}>
           <div style={s.modal}>
@@ -695,9 +688,7 @@ function AdminMembers() {
         </div>
       )}
 
-      {/* ══════════════════════════════════════
-          VIEW MEMBER MODAL
-      ══════════════════════════════════════ */}
+      {/* VIEW MEMBER MODAL */}
       {viewModal && selectedMember && (
         <div style={s.overlay} onClick={(e) => e.target === e.currentTarget && closeAll()}>
           <div style={s.modal}>
@@ -706,7 +697,7 @@ function AdminMembers() {
               <button style={s.closeBtn} onClick={closeAll}>Close</button>
             </div>
 
-            {/* Basic info */}
+            {/* Info */}
             <div style={s.viewGrid}>
               <div>
                 <div style={s.viewLabel}>Email</div>

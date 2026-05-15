@@ -35,7 +35,6 @@ const styles = {
   rowTitle: { fontSize: "0.95rem", fontWeight: "500", color: "#ffffff", marginBottom: "0.2rem" },
   rowSub: { fontSize: "0.82rem", color: "#888" },
   rowRight: { display: "flex", alignItems: "center", gap: "0.75rem" },
-  // Badges
   badgeActive: {
     backgroundColor: "#0a2a0a", color: "#22c55e", border: "1px solid #22c55e33",
     fontSize: "0.72rem", fontWeight: "600", padding: "0.25rem 0.65rem",
@@ -101,12 +100,10 @@ function Account() {
   useEffect(() => {
     if (!user) { navigate("/login"); return; }
 
-    // Fetch the profile to check for expiry notifications
     const checkNotifications = async () => {
       try {
         const res = await api.get("/users/me");
 
-        // If the backend says a plan was cancelled, show the toast!
         if (res.data.expiryMessage) {
           showToast(res.data.expiryMessage, "error");
         }

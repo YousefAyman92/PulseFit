@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const s = {
   container: {
     position: "fixed",
-    top: "80px",           // just below navbar
+    top: "80px",
     right: "1.5rem",
     zIndex: 999,
     display: "flex",
@@ -29,7 +29,6 @@ const s = {
   },
 };
 
-// Global toast state — simple singleton approach
 let _addToast = null;
 
 export function showToast(message, type = "success") {

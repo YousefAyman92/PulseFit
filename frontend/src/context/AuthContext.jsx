@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);       // { _id, fullName, email, role }
+  const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true); // wait for localStorage restore
 
@@ -41,7 +41,6 @@ export function AuthProvider({ children }) {
   );
 }
 
-// Custom hook — use this in any component instead of useContext(AuthContext)
 export function useAuth() {
   return useContext(AuthContext);
 }

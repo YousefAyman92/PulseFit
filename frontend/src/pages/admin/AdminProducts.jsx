@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../../utils/api";
 
-const CATEGORIES = ["Protein", "Supplements", "Energy Drinks", "Snacks & Bars", "Apparel", "Accessories"];
+const CATEGORIES = ["protein", "supplements", "energy drinks", "snacks & bars", "apparel", "accessories"];
 const RES_STATUSES = ["all", "reserved", "picked_up", "cancelled"];
 
 const s = {
@@ -55,7 +55,7 @@ const s = {
   errorMsg: { color: "#ff6b6b", fontSize: "0.82rem", marginBottom: "1rem" },
 };
 
-const emptyForm = { name: "", category: "Protein", price: "", stock: "0", imageUrl: "", description: "", isActive: true };
+const emptyForm = { name: "", category: "protein", price: "", stock: "0", imageUrl: "", description: "", isActive: true };
 
 function formatDate(d) {
   return new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
@@ -68,7 +68,7 @@ function getResBadge(status) {
 }
 
 function AdminProducts() {
-  const [activeTab,    setActiveTab]    = useState("products"); // "products" | "reservations"
+  const [activeTab,    setActiveTab]    = useState("products"); 
   const [products,     setProducts]     = useState([]);
   const [reservations, setReservations] = useState([]);
   const [loading,      setLoading]      = useState(true);
@@ -103,11 +103,21 @@ function AdminProducts() {
 
   // ── Product CRUD ──
   const openNew  = () => { setEditing(null); setForm(emptyForm); setError(""); setModalOpen(true); };
+  
   const openEdit = (p) => {
     setEditing(p);
-    setForm({ name: p.name, category: p.category, price: String(p.price), stock: String(p.stock), imageUrl: p.imageUrl || "", description: p.description || "", isActive: p.isActive });
+    setForm({ 
+      name: p.name, 
+      category: p.category ? p.category.toLowerCase() : "protein", 
+      price: String(p.price), 
+      stock: String(p.stock), 
+      imageUrl: p.imageUrl || "", 
+      description: p.description || "", 
+      isActive: p.isActive 
+    });
     setError(""); setModalOpen(true);
   };
+
   const closeModal = () => { setModalOpen(false); setEditing(null); setError(""); };
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -130,7 +140,6 @@ function AdminProducts() {
     catch (err) { alert(err.response?.data?.message || "Failed to delete."); }
   };
 
-  // ── Reservation status update ──
   const handleResStatus = async (id, newStatus) => {
     try {
       const r = await api.patch(`/reservations/${id}/status`, { status: newStatus });
@@ -150,7 +159,11 @@ function AdminProducts() {
           <div style={s.topRight}>
             <select style={s.filterSelect} value={catFilter} onChange={(e) => setCatFilter(e.target.value)}>
               <option value="all">All categories</option>
-              {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+              {CATEGORIES.map((c) => (
+                <option key={c} value={c}>
+                  {c === "energy drinks" ? "Energy Drinks" : c === "snacks & bars" ? "Snacks & Bars" : c.charAt(0).toUpperCase() + c.slice(1)}
+                </option>
+              ))}
             </select>
             <button style={s.newBtn} onClick={openNew}>+ New product</button>
           </div>
@@ -206,7 +219,9 @@ function AdminProducts() {
                         : <div style={s.noThumb}>—</div>}
                     </td>
                     <td style={{ ...cell, fontWeight: "500", color: "#fff" }}>{p.name}</td>
-                    <td style={cell}>{p.category}</td>
+                    <td style={cell}>
+                      {p.category === "energy drinks" ? "Energy Drinks" : p.category === "snacks & bars" ? "Snacks & Bars" : p.category?.charAt(0).toUpperCase() + p.category?.slice(1)}
+                    </td>
                     <td style={cell}>${p.price?.toFixed(2)}</td>
                     <td style={cell}>{p.stock}</td>
                     <td style={cell}>
@@ -278,7 +293,7 @@ function AdminProducts() {
         </div>
       )}
 
-      {/* Product modal — unchanged */}
+      {/* Product modal */}
       {modalOpen && (
         <div style={s.overlay} onClick={(e) => e.target === e.currentTarget && closeModal()}>
           <div style={s.modal}>
@@ -295,7 +310,11 @@ function AdminProducts() {
               <div>
                 <label style={s.label}>Category</label>
                 <select style={s.select} name="category" value={form.category} onChange={handleChange}>
-                  {CATEGORIES.map((c) => <option key={c}>{c}</option>)}
+                  {CATEGORIES.map((c) => (
+                    <option key={c} value={c}>
+                      {c === "energy drinks" ? "Energy Drinks" : c === "snacks & bars" ? "Snacks & Bars" : c.charAt(0).toUpperCase() + c.slice(1)}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div>

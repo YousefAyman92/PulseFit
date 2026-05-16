@@ -62,7 +62,7 @@ function formatDate(d) {
 }
 
 function getResBadge(status) {
-  if (status === "reserved")  return s.badgeReserved;
+  if (status === "reserved")   return s.badgeReserved;
   if (status === "picked_up") return s.badgePickedUp;
   return s.badgeCancelled;
 }
@@ -144,6 +144,11 @@ function AdminProducts() {
     try {
       const r = await api.patch(`/reservations/${id}/status`, { status: newStatus });
       setReservations((prev) => prev.map((res) => res._id === id ? r.data : res));
+      
+      if (newStatus === "cancelled" || newStatus === "picked_up") {
+        await fetchProducts(); 
+      }
+    
     } catch (err) { alert(err.response?.data?.message || "Failed to update."); }
   };
 
@@ -279,6 +284,7 @@ function AdminProducts() {
                         style={s.statusSelect}
                         value={r.status}
                         onChange={(e) => handleResStatus(r._id, e.target.value)}
+                        disabled={r.status !== "reserved"}
                       >
                         <option value="reserved">Reserved</option>
                         <option value="picked_up">Picked up</option>

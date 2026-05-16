@@ -6,6 +6,8 @@ const productSchema = new mongoose.Schema(
     description: { type: String },
     category: {
       type: String,
+      required: true,
+      lowercase: true,
       enum: [
         "protein",
         "supplements",
@@ -14,7 +16,7 @@ const productSchema = new mongoose.Schema(
         "apparel",
         "accessories",
       ],
-      required: true,
+    
     },
     price: { type: Number, required: true },
     stock: { type: Number, default: 0 },

@@ -62,7 +62,7 @@ const styles = {
     color: "#aaaaaa",
   },
   navLinkActive: {
-    color: "#a3e635",   // ← green when active
+    color: "#a3e635",
     fontWeight: "500",
   },
   navLinkHover: {
@@ -132,7 +132,6 @@ function Navbar() {
     navigate("/");
   };
 
-  // Build nav links based on auth state
   const publicLinks = [
     { label: "Home", to: "/" },
     { label: "Plans", to: "/plans" },

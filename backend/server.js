@@ -1,6 +1,7 @@
 const dotenv = require("dotenv");
 const express = require("express");
 const connectDB = require("./config/db");
+const morgan = require("morgan");
 const routes = require("./routes");
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
@@ -15,6 +16,7 @@ const app = express();
 // Middleware
 app.use(cors({ origin: process.env.CLIENT_URL }));
 app.use(express.json());
+app.use(morgan("dev"));
 
 app.use(
   "/api-docs",

@@ -113,7 +113,7 @@ function Signup() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent refresh
     const errors = validate(form);
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
